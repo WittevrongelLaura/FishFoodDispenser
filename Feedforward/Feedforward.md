@@ -1,5 +1,5 @@
 # Projectgegevens
-**VOORNAAM NAAM:**  Plaats hier jouw voornaam & naam.
+**VOORNAAM NAAM:**  Laura Wittevrongel
 
 **Sparringpartner:** schrijf hier de naam van jouw sparring partner. Deze persoon is jouw klankbord, redder in nood, motivator, partner in crime :-)
 
@@ -30,8 +30,8 @@
 
 # Feedforward gesprekken
 
-## Gesprek 1 (Datum: dd/mm/yyyy)
-Lector: 
+## Gesprek 1 (Datum: 09/03/2021)
+Lector: Geert en Claudia
 
 Vragen voor dit gesprek:
 - [x] vraag 1:
@@ -42,8 +42,8 @@ Dit is de feedback op mijn vragen.
 - feedback 2
 
 Hier komt de feedforward: wat ga ik concreet doen?
-- [ ] ToDo 1
-- [ ] ToDo 2
+- [ ] ToDo 1: oplossing zoeken voor de force sensor. Eventueel vervangen door andere sensor en het probleem met het vullen van het potje oplossen door gebruik van een timer.
+- [ ] ToDo 2: blokschema aanpassen, hij was niet specifiek genoeg. Iedere led, servo, fotodiode wordt apart getoont met specifieke uitleg wat het component precies doet.
 
 ## Gesprek 2 (Datum: dd/mm/yyyy)
 Lector: 
