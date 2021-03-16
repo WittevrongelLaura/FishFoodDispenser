@@ -33,12 +33,12 @@
 ## Gesprek 1 (Datum: 09/03/2021)
 Lector: Geert en Claudia
 
-Vragen voor dit gesprek: (geen vragen gesteld)
-- [ ] vraag 1:
+Vragen voor dit gesprek:
+- [x] vraag 1: Wat kan er gebruikt worden als de force sensor niet nauwkeurig genoeg is om het potje te wegen?
 - [ ] vraag 2:
 
 Dit is de feedback op mijn vragen. 
-- feedback 1
+- feedback 1: Water Level Sensor kan eventueel gebruikt worden om het waterniveau te meten. Maakt gebruik van i2C bus om dit component aan te sturen, wordt nog gezien in de les Sensors & Interfacing.
 - feedback 2
 
 Hier komt de feedforward: wat ga ik concreet doen?
