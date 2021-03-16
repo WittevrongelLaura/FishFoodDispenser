@@ -35,11 +35,11 @@ Lector: Geert en Claudia
 
 Vragen voor dit gesprek:
 - [x] vraag 1: Wat kan er gebruikt worden als de force sensor niet nauwkeurig genoeg is om het potje te wegen?
-- [ ] vraag 2:
+- [x] vraag 2: Wat kan ik gebruiken als waterbestendige behulzing?
 
 Dit is de feedback op mijn vragen. 
 - feedback 1: Water Level Sensor kan eventueel gebruikt worden om het waterniveau te meten. Maakt gebruik van i2C bus om dit component aan te sturen, wordt nog gezien in de les Sensors & Interfacing.
-- feedback 2
+- feedback 2: https://www.conrad.be/p/hammond-electronics-rp1135c-rp1135c-universele-behuizing-125-x-85-x-55-abs-lichtgrijs-1-stuks-539099 dit kan gebruikt worden maar waarschijnlijk niet groot genoeg. Nog even verder googlen
 
 Hier komt de feedforward: wat ga ik concreet doen?
 - [x] ToDo 1: oplossing zoeken voor de force sensor. Eventueel vervangen door andere sensor en het probleem met het vullen van het potje oplossen door gebruik van een timer.
