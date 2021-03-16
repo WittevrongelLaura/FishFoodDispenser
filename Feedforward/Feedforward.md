@@ -33,7 +33,7 @@
 ## Gesprek 1 (Datum: 09/03/2021)
 Lector: Geert en Claudia
 
-Vragen voor dit gesprek:
+Vragen voor dit gesprek: (geen vragen gesteld)
 - [ ] vraag 1:
 - [ ] vraag 2:
 
