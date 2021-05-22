@@ -45,17 +45,24 @@ Hier komt de feedforward: wat ga ik concreet doen?
 - [x] ToDo 1: oplossing zoeken voor de force sensor. Eventueel vervangen door andere sensor en het probleem met het vullen van het potje oplossen door gebruik van een timer.
 - [x] ToDo 2: blokschema aanpassen, hij was niet specifiek genoeg. Iedere led, servo, fotodiode wordt apart getoont met specifieke uitleg wat het component precies doet.
 
-## Gesprek 2 (Datum: dd/mm/yyyy)
-Lector: 
+## Gesprek 2 (Datum: 21/05/2021)
+Lector: Pieter-Jan
 
 Vragen voor dit gesprek:
-- [x] vraag 1:
-- [ ] vraag 2:
+- [x] vraag 1: Fritzing --> geen gevonden fritzing component voor de amplifier
+- [x] vraag 2: Hoe werkt de amplifier en hoe kan ik die schakelen aan de pi en aan de speaker
+- [x] vraag 3: Geen fritzing component gevonden voor Groove Water Level Sensor
+- [x] vraag 4: LCD --> R/W pin op een GPIO pin aansluiten om te kunnen lezen wat er op het scherm staat?
 
 Dit is de feedback op mijn vragen. 
-- feedback 1
-- feedback 2
+- feedback 1: Fritzing component gevonden, maar niet helemaal dezelfde pinout (maar lukt om het schema te maken)
+- feedback 2: 
 
 Hier komt de feedforward: wat ga ik concreet doen?
-- [ ] ToDo 1
-- [ ] ToDo 2
+- [x] ToDo 1: Dit component ga ik importeren en verbinden met de pi en speaker
+- [x] ToDo 2: De "L input", "R input" en "G input" verbinden met de pi via een audio jack 3.5mm tussenstuk.
+De "R out -" en "R out +" verbinden met de speaker. De "GND" en "5V" verbinden met externe power supply.
+Wordt nog verder overlegd met Geert.
+- [ ] ToDo 3: Wordt nog overlegd met Geert.
+- [x] ToDo 4: R/W pin kan je via levelshifter aan een GPIO pin aansluiten, maar softwarematig is het gemakkelijker
+om het uit te lezen. Dus R/W pin op GND connecteren.
