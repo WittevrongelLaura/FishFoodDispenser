@@ -1,7 +1,9 @@
-from typing_extensions import final
 from RPi import GPIO
 import time
 import spidev
+
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 
 class MCP:
 
@@ -55,9 +57,11 @@ class MCP:
 
 
 
+mcp = MCP()
+
 if __name__ == "__main__":
     try:
-        mcp = MCP()
+        
         while True:
             mcp.read_channel(0)
             mcp.read_channel(1)
@@ -67,3 +71,24 @@ if __name__ == "__main__":
     finally:
         mcp.closespi()
         GPIO.cleanup()
+
+
+
+
+# Start app
+app = Flask(__name__)
+CORS(app)
+
+# Custom endpoint
+endpoint = '/api/v1'
+
+# ROUTES
+@app.route(endpoint + '/fotodiode0', methods=['GET'])
+def get_data_fotodiode0():
+    if request.method == 'GET':
+        return mcp.read_channel(0)
+
+@app.route(endpoint + '/fotodiode1', methods=['GET'])
+def get_data_fotodiode1():
+    if request.method == 'GET':
+        return mcp.read_channel(1)
