@@ -45,6 +45,6 @@ class DataRepository:
     #########  fotodiode  #########
     @staticmethod
     def create_fotodiode(date, time, lightsensor):
-        sql = "INSERT INTO FishFoodDispenserDB.fotodiode(date, time, lightsensor_value) VALUES(%s,%s,%s)"
+        sql = "INSERT INTO FishFoodDispenserDB.Tubcapacity(date, time, lightsensor_value) VALUES(%s,%s,%s)"
         params = [date, time, lightsensor]
         return Database.execute_sql(sql, params)

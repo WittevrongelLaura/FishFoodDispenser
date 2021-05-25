@@ -6,6 +6,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_socketio import SocketIO, send, emit
 from repositories.DataRepository import DataRepository
+from datetime import date, datetime
 
 
 class MCP:
@@ -86,6 +87,7 @@ try:
         print("helloooooo")
         if request.method == 'GET':
             print(mcp.read_channel(0))
+            DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  mcp.read_channel(0))
             return mcp.read_channel(0)
         
         return "fout"
@@ -94,6 +96,7 @@ try:
     def get_data_fotodiode1():
         print("2222222222222222222")
         if request.method == 'GET':
+            DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  mcp.read_channel(1))
             return mcp.read_channel(1)
     
         return "fout"
