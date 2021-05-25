@@ -41,4 +41,10 @@ class DataRepository:
         params = [waterlevel_id]
         return Database.execute_sql(sql, params)
 
-    
+
+    #########  fotodiode  #########
+    @staticmethod
+    def create_fotodiode(date, time, lightsensor):
+        sql = "INSERT INTO FishFoodDispenserDB.fotodiode(date, time, lightsensor_value) VALUES(%s,%s,%s)"
+        params = [date, time, lightsensor]
+        return Database.execute_sql(sql, params)

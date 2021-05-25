@@ -9,10 +9,12 @@ let htmlFotodiodeBoven, htmlFotodiodeOnder
 
 //#region ***  Callback-Visualisation - show___ ***
 const showValueFotodiode0 = function(jsonObject){
+    console.log("fotodiode0")
     console.log(jsonObject);
     htmlFotodiodeBoven.value = jsonObject
 }
 const showValueFotodiode1 = function(jsonObject){
+    console.log("fotodiode1")
     console.log(jsonObject);
     htmlFotodiodeOnder.value = jsonObject
 }
@@ -23,11 +25,13 @@ const showValueFotodiode1 = function(jsonObject){
 
 //#region ***  Data Access - get___ ***
 const getValue0 = function(){
+    console.log("value0")
     handleData('http://127.0.0.1:5000/api/v1/fotodiode0', showValueFotodiode0);
 }
 
 const getValue1 = function(){
-    handleData('http://127.0.0.1:5000/api/v1/fotodiode0', showValueFotodiode1)
+    console.log("value1")
+    handleData('http://127.0.0.1:5000/api/v1/fotodiode1', showValueFotodiode1)
 }
 //#endregion
 
@@ -42,7 +46,7 @@ const init = function () {
     htmlFotodiodeOnder = document.querySelector('.js-onder')
 
     getValue0();
-    getValue1()
+    getValue1();
 };
 //#endregion
 
