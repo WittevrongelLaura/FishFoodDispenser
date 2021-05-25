@@ -1,111 +1,86 @@
 from RPi import GPIO
 import time
-import spidev
 
-from flask import Flask, jsonify, request
+
+from flask import Flask, json, jsonify, request
 from flask_cors import CORS
 from flask_socketio import SocketIO, send, emit
 from repositories.DataRepository import DataRepository
 from datetime import date, datetime
 
-
-class MCP:
-
-    def __init__(self, bus=0, device=0):
-        # initialiseer een SpiDev-object
-        self.spi = spidev.SpiDev()
-        # slave kiezen, bus is het nr van de SPI-bus, device is nr van SS/CE/CS-lijn
-        self.spi.open(0, 0)  # bus 0(SPI0)  device 0(slave op CE 0)
-        # klokfreq intstellen op 100kHz
-        self.spi.max_speed_hz = 10 ** 5
-
-    def OmzettenInPercentage(self, waarde):
-        return (waarde/1023.0) * 100
-
-    def closespi(self):
-        self.spi.close()
-
-    def read_channel(self, ch):
-        fotodiode = 1
-        # ch is 0 of 1
-        # commandobyte samenstellen
-        channel = ch << 4 | 128
-        # 0 << 4 = 0000 | 128 = 10000000 = dec:128
-        # 1 << 4 = 1000 | 128 = 10001000 = dec:144
-        #print(channel)
-        # list met de 3 te versturen bytes
-        bytes_out = [0b00000001, channel, 0b00000000]
-        #print(bytes_out)
-        # versturen en 3 bytes terugkrijgen
-        bytes_in = self.spi.xfer(bytes_out)
-
-        # meetwaarde uithalen
-        #print(bytes_in)
-        byte1 = bytes_in[1]
-        byte2 = bytes_in[2]
-        # bytes aan elkaar hangen
-        #print("{0:b} & {1:b}".format(byte1, byte2))
-        result = byte1 << 8 | byte2
-
-        # meetwaarde afdrukken
-        if ch == 0:
-            
-            # print(result)
-            # print(format(self.OmzettenInPercentage(result), '.2f') + " %")
-            return format(self.OmzettenInPercentage(result), '.2f')
-        elif ch == 1:
-            # print(result)
-            # print(format(self.OmzettenInPercentage(result), '.2f') + " %")
-            return format(self.OmzettenInPercentage(result), '.2f')
-        
-
+from model.MCP import MCP
 
 
 mcp = MCP()
 
 print("app.py")
 try:
-    #mcp.read_channel(0)
-    #mcp.read_channel(1)
-    #time.sleep(1)
-    
     # Start app
     app = Flask(__name__)
+    app.config['SECRET_KEY'] = 'Secret!aBcdXyZ'
     socketio = SocketIO(app, cors_allowed_origins="*")
     CORS(app)
 
-    # Custom endpoint
-    endpoint = '/api/v1'
+    # # Custom endpoint
+    # endpoint = '/api/v1'
 
-    #ROUTES
-    @app.route('/')
-    def index():
-        return 'index'
+    # #ROUTES
+    # @app.route('/')
+    # def index():
+    #     return 'index'
 
-    @app.route(endpoint + '/fotodiode0', methods=['GET'])
-    def get_data_fotodiode0():
-        print("helloooooo")
-        if request.method == 'GET':
-            print(mcp.read_channel(0))
-            DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  mcp.read_channel(0))
-            return mcp.read_channel(0)
-        
-        return "fout"
+    # @app.route(endpoint + '/fotodiode/<id>', methods=['GET'])
+    # def get_data_fotodiode(id):
+    #     if request.method == 'GET':
+    #         print("get data")
+    #         print(id)
+    #         if id == 0:
+    #             print(id)
+    #             return mcp.read_channel(0)
+    #         elif id == 1:
+    #             return mcp.read_channel(1)
+    #     return "fout"
 
-    @app.route(endpoint + '/fotodiode1', methods=['GET'])
-    def get_data_fotodiode1():
-        print("2222222222222222222")
-        if request.method == 'GET':
-            DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  mcp.read_channel(1))
-            return mcp.read_channel(1)
+    # # @app.route(endpoint + '/fotodiode1', methods=['GET'])
+    # # def get_data_fotodiode1():
+    # #     if request.method == 'GET':
+    # #         return mcp.read_channel(1)
     
-        return "fout"
+    # #     return "fout"
 
+    # @app.route(endpoint + '/create_photodiode', methods=['GET'])
+    # def create_photodiode():
+    #     if request.method == 'GET':
+    #         DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  mcp.read_channel(0))
+    #         DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  mcp.read_channel(1))
+    #         return "done"
+    #     return "create done"
+    
+    
     #socketio
-    
+    @socketio.on('connect')
+    def connection():
+        print('A new client connected')
+        user = request.sid
+        emit("B2F_connection", f"Welkom nieuwe client {user}")
+
+    @socketio.on('F2B_getValuesPhotodiodes')
+    def get_values_photodiodes(jsonObject):
+        print("De backend kreeg dit het jsonObject binnen: ")
+        print(jsonObject)
+        emit('B2F_getValuesPhotodiodes', [mcp.read_channel(0),  mcp.read_channel(1)])
+
+    @socketio.on('F2B_createPhotodiodes')
+    def create_photodiodes_in_db(jsonObject):
+        print(jsonObject)
+        boven = jsonObject[0]
+        onder = jsonObject[1]
+        DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  boven)
+        DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  onder)
 
     if __name__ == "__main__":
-        app.run(debug=True)
+        #app.run(debug=True)
+        socketio.run(app, host='0.0.0.0', port=5000, debug=True)
 
 except KeyboardInterrupt as e:
     print(e)
