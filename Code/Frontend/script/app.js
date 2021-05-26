@@ -24,10 +24,10 @@ const showValueFotodiode = function(jsonObject){
 //#endregion
 
 //#region ***  Data Access - get___ ***
-const getValuePhotodiode = function(id){
-    console.log("get photodiodes");
-    handleData(`http://127.0.0.1:5000/api/v1/fotodiode/${id}`, showValueFotodiode);
-}
+// const getValuePhotodiode = function(id){
+//     console.log("get photodiodes");
+//     handleData(`http://127.0.0.1:5000/api/v1/fotodiode/${id}`, showValueFotodiode);
+// }
 
 // const getValue1 = function(id){
 //     console.log("value1");
