@@ -1,26 +1,26 @@
 from RPi import GPIO
 import time
+from model.Shiftregister import Shiftregister
 
 class LCD:
-    def __init__(self, RS=21, E=21, bits=[16,12,25,24,23,26,19,13]):
+    def __init__(self, RS=23, E=18, SR=Shiftregister()):
         GPIO.setmode(GPIO.BCM)
         self.RS = RS
         self.E = E
-        self.bits = bits
-
-        for bit in self.bits:
-            GPIO.setup(bit, GPIO.OUT,initial=GPIO.LOW)
+        self.SR = SR
         
-        GPIO.setup(self.RS, GPIO.OUT,  initial=GPIO.LOW)
-        GPIO.setup(self.E,  GPIO.OUT, initial=GPIO.HIGH)
+        GPIO.setup(self.RS, GPIO.OUT)
+        GPIO.setup(self.E,  GPIO.OUT)
 
         self.setup_display()
 
     
     def set_data_bits(self, byte):
-        mask = 0x01
-        for i in range(0,8):
-            GPIO.output(self.bits[i], (byte & mask << i) > 0)
+        # mask = 0x01
+        # for i in range(0,8):
+        #     GPIO.output(self.bits[i], (byte & mask << i) > 0)
+        self.SR.write_byte(byte)
+        self.SR.copy_to_storage_register()
 
 
     def send_instruction(self, value):
@@ -59,26 +59,25 @@ class LCD:
         #display on
         self.send_instruction(0x0f)
         #clear display
-        self.clear_display
+        self.clear_display()
         # #cursor home
         #send_instruction(0x40) 
 
-try:
-    lcd = LCD()
+# try:
+#     lcd = LCD()
    
-    #send_character(ord("A"))
-    # text = "HALLO Laura"
-    # for char in text:
-    #     send_character(ord(char))
-    #send_character(65)#letter A schrijven
-    #lcd.write_message('Hellooooohelloooooooooj')
+#     #send_character(ord("A"))
+#     # text = "HALLO Laura"
+#     # for char in text:
+#     #     send_character(ord(char))
+#     #send_character(65)#letter A schrijven
+#     #lcd.write_message('Hellooooohelloooooooooj')
 
-    message = input("What do you want to display? > ")
-    lcd.write_message(message)
+#     message = input("What do you want to display? > ")
+#     lcd.write_message(message)
     
-except KeyboardInterrupt as e:
-    print(e)
-finally:
-    lcd.clear_display()
-    GPIO.cleanup()
+# except KeyboardInterrupt as e:
+#     print(e)
+# # finally:
+#     #lcd.clear_display()
     

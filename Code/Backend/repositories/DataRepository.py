@@ -10,41 +10,46 @@ class DataRepository:
             gegevens = request.form.to_dict()
         return gegevens
 
-    #########  waterlevel  #########
+    #########  Historiek/Dispenser  #########
     @staticmethod
-    def read_all_waterlevel():
-        sql = "SELECT * from FishFoodDispenserDB.Waterlevel"
+    def read_all_history():
+        sql = "SELECT measuring_id, component_id, datetime, status, value, action_id FROM FishFooddispenser;"
         return Database.get_rows(sql)
 
     @staticmethod
-    def read_waterlevel_by_id(id_waterlevel):
-        sql = "SELECT * from FishFoodDispenserDB.Waterlevel WHERE id_waterlevel = %s"
-        params = [id_waterlevel]
+    def read_hystory_by_id(measuring_id):
+        sql = "SELECT measuring_id, component_id, datetime, status, value, action_id FROM FishFooddispenser WHERE measuring_id = %s;"
+        params = [measuring_id]
         return Database.get_one_row(sql, params)
 
     @staticmethod
-    def create_waterlevel(date, time, waterlevel):
-        sql = "INSERT INTO FishFoodDispenserDB.Waterlevel(date, time, waterlevel) VALUES(%s,%s,%s)"
-        params = [date, time, waterlevel]
+    def create_history(component_id, datetime, status, value, action_id):
+        sql = "INSERT INTO FishFooddispenserDB.Dispenser(component_id, datetime, status, value, action_id) VALUES(%s,%s,%s,%s,%s);"
+        params = [component_id, datetime, status, value, action_id]
         return Database.execute_sql(sql, params)
 
     @staticmethod
-    def update_waterlevel(waterlevel_id, date, time, waterlevel):
-        sql = "UPDATE FishFoodDispenserDB.Waterlevel SET date = %s, time = %s, waterlevel = %s WHERE waterlevel_id = %s"
-        params = [date, time, waterlevel, waterlevel_id]
-        #print(sql)
+    def update_history(component_id, datetime, status, value, action_id):
+        sql = "UPDATE FishFooddispenser.Dispenser SET component_id = %s, datetime = %s, status = %s, value = %s, action_id = %s;"
+        params = [component_id, datetime, status, value, action_id]
         return Database.execute_sql(sql, params)
 
     @staticmethod
-    def delete_waterlevel(waterlevel_id):
-        sql = "DELETE from FishFoodDispenserDB.Waterlevel WHERE waterlevel_id = %s"
-        params = [waterlevel_id]
+    def delete_history(measuring_id):
+        sql = "DELETE FROM FishFooddispenser.Dispenser WHERE measuring_id = %s;"
+        params = [measuring_id]
         return Database.execute_sql(sql, params)
 
-
-    #########  fotodiode  #########
+    #########  Component  #########
     @staticmethod
-    def create_fotodiode(date, time, lightsensor):
-        sql = "INSERT INTO FishFoodDispenserDB.Tubcapacity(date, time, lightsensor_value) VALUES(%s,%s,%s)"
-        params = [date, time, lightsensor]
+    def create_component(component_name, measuring_unit):
+        sql = "INSERT INTO FishFooddispenserDB.Component(component_name, measuring_unit) VALUES(%s,%s);"
+        params = [component_name, measuring_unit]
+        return Database.execute_sql(sql, params)
+
+    #########  Action  #########
+    @staticmethod
+    def create_action(action):
+        sql = "INSERT INTO FishFooddispenserDB.Action(action) VALUES(%s);"
+        params = [action]
         return Database.execute_sql(sql, params)
