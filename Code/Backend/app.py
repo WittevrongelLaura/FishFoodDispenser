@@ -9,9 +9,13 @@ from repositories.DataRepository import DataRepository
 from datetime import date, datetime
 
 from model.MCP import MCP
+# from model.WaterLevel import Waterlevel
+# from model.Watertemp import Watertemp
 
 
 mcp = MCP()
+# waterlevel = Waterlevel()
+# watertemp = Watertemp()
 
 print("app.py")
 try:
@@ -19,31 +23,31 @@ try:
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'Secret!aBcdXyZ'
     socketio = SocketIO(app, cors_allowed_origins="*")
-    print(mcp.read_channel(0))
-    print(mcp.read_channel(1))
+    # print(mcp.read_channel(0))
+    # print(mcp.read_channel(1))
     # DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  mcp.read_channel(0))
     # DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  mcp.read_channel(1))
     CORS(app)
 
     # Custom endpoint
-    endpoint = '/api/v1'
+    #endpoint = '/api/v1'
 
     #ROUTES
-    @app.route('/')
-    def index():
-        return 'index'
+    # @app.route('/')
+    # def index():
+    #     return 'index'
 
-    @app.route(endpoint + '/fotodiode/<id>', methods=['GET'])
-    def get_data_fotodiode(id):
-        if request.method == 'GET':
-            print("get data")
-            print(id)
-            if id == 0:
-                print(id)
-                return mcp.read_channel(0)
-            elif id == 1:
-                return mcp.read_channel(1)
-        return "fout"
+    # @app.route(endpoint + '/fotodiode/<id>', methods=['GET'])
+    # def get_data_fotodiode(id):
+    #     if request.method == 'GET':
+    #         print("get data")
+    #         print(id)
+    #         if id == 0:
+    #             print(id)
+    #             return mcp.read_channel(0)
+    #         elif id == 1:
+    #             return mcp.read_channel(1)
+    #     return "fout"
 
     # @app.route(endpoint + '/fotodiode1', methods=['GET'])
     # def get_data_fotodiode1():
@@ -52,13 +56,13 @@ try:
     
     #     return "fout"
 
-    @app.route(endpoint + '/create_photodiode', methods=['GET'])
-    def create_photodiode():
-        if request.method == 'GET':
-            DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  mcp.read_channel(0))
-            DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  mcp.read_channel(1))
-            return "done"
-        return "create done"
+    # @app.route(endpoint + '/create_photodiode', methods=['GET'])
+    # def create_photodiode():
+    #     if request.method == 'GET':
+    #         DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  mcp.read_channel(0))
+    #         DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  mcp.read_channel(1))
+    #         return "done"
+    #     return "create done"
     
     
     #socketio
@@ -91,4 +95,6 @@ except KeyboardInterrupt as e:
 
 finally:
     mcp.closespi()
+    # waterlevel.close_waterlevel()
+    # watertemp.close_file()
     #GPIO.cleanup()

@@ -15,11 +15,11 @@ class Watertemp:
     def close_file(self):
         self.sensor_file.close()
 
-try:
-    temp = Watertemp()
-    print(temp.read_temp())
+# try:
+#     temp = Watertemp()
+#     print(temp.read_temp())
             
-except KeyboardInterrupt as e:
-    print(e)
-finally:
-    temp.close_file()
+# except KeyboardInterrupt as e:
+#     print(e)
+# finally:
+#     temp.close_file()

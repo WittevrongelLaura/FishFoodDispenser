@@ -97,3 +97,38 @@ Hier komt de feedforward: wat ga ik concreet doen?
 
 - [x] ToDo 1: /
 - [x] ToDo 2: print statements vervangen door return waarde
+
+## Gesprek 4 (Datum: 27/05/2021)
+
+Lector: Dieter
+
+Vragen voor dit gesprek:
+
+- [x] vraag 1: Connection refused met socketio
+
+Dit is de feedback op mijn vragen.
+
+- feedback 1: surfen naar 192.168.168.168 ipv 127.0.0.1
+
+Hier komt de feedforward: wat ga ik concreet doen?
+
+- [x] ToDo 1: surfen naar 192.168.168.168
+
+## Gesprek 5 (Datum: 27/05/2021)
+
+Lector: Frederik
+
+Vragen voor dit gesprek:
+
+- [x] vraag 1: Hoe mijn database verbeteren?
+- [x] vraag 2: Waar kan ik de indexen best plaatsen?
+
+Dit is de feedback op mijn vragen.
+
+- feedback 1: Geen aparte tabellen per sensor of actuator, maar 1 tabel met alle componenten in.
+- feedback 2: Index op component_naam en action omdat er daar het meest kan op gezocht worden.
+
+Hier komt de feedforward: wat ga ik concreet doen?
+
+- [x] ToDo 1: 1 tabel voor alle componenten maken en een action tabel toevoegen. Die tabellen toevoegen aan de historiek tabel.
+- [x] ToDo 2: Indexen plaatsen op de naam van het component en de actie beschrijving.

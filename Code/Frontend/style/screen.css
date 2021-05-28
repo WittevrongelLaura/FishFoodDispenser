@@ -17,7 +17,10 @@
 html {
     font-size: 16px;
     line-height: 1.5;
-    font-family: "HK Grotesk Web", Helvetica, arial, sans-serif;
+    /*font-family: "", Helvetica, arial, sans-serif;*/
+    font-family: remora-sans-w2, Helvetica, arial,  sans-serif;
+    font-weight: 700;
+    font-style: normal;
     color: #202024;
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;

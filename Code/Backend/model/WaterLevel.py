@@ -6,7 +6,7 @@ from smbus import SMBus
 
 class Waterlevel:
     
-    def __init__(self, slave_address=0x77, i2c=SMBus()):
+    def __init__(self, slave_address=0x78, i2c=SMBus()):
         #commando: i2cdetect -y 1 --> 0x77
         self.slave_address = slave_address
         self.i2c = i2c
@@ -28,7 +28,7 @@ class Waterlevel:
         return values
 
     def read_waterlevel(self):
-        values = self.__read_data(0x01,10)
+        values = self.__read_data(0x01,12)
         return values
 
     @staticmethod
@@ -44,7 +44,6 @@ class Waterlevel:
         return value
 
     def print_data(self):
-        
         print(self.read_waterlevel())
 
     def close_waterlevel(self):
@@ -56,6 +55,7 @@ try:
         waterlevel.print_data()
         print()
         time.sleep(1)
+        
 except KeyboardInterrupt as e:
     print(e)
 finally:
