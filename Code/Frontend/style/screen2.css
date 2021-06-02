@@ -14,7 +14,7 @@
 
 html {
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 25px;
   /*font-family: "", Helvetica, arial, sans-serif;*/
   font-family: 'Bree Serif', Helvetica, arial, sans-serif;
   font-weight: 700;
@@ -80,13 +80,13 @@ h1 {
 }
 
 h2 {
-  font-size: 32px;
+  font-size: 24px;
   line-height: 40px;
   margin: 0 0 24px;
 }
 
 h3 {
-  font-size: 26px;
+  font-size: 20px;
   line-height: 32px;
   margin: 0 0 24px;
 }
@@ -148,6 +148,7 @@ hr {
 a {
   color: #fff;
   transition: all 0.1s ease-in-out;
+  cursor: pointer;
 }
 
 a:visited,
@@ -172,14 +173,14 @@ a:focus {
 
 .o-row {
   position: relative;
-  padding: 24px 24px 0;
+  padding: 47px 47px 0;
   display: flow-root;
 }
 
 /* size modifiers */
 
 .o-row--lg {
-  padding-top: 48px;
+  padding-top: 47px;
   padding-bottom: 24px;
 }
 
@@ -226,7 +227,7 @@ a:focus {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  max-width: 22.5em; /* 360 /16 = 22.5em */
+  max-width: 75em; /* 1200 /16 = 75em */
 }
 
 /*
@@ -271,6 +272,10 @@ a:focus {
 
 .o-layout__item {
   flex-basis: 100%;
+}
+
+.o-layout__item--subtitle{
+  text-decoration: underline;
 }
 
 /* gutter modifiers, these affect o-layout__item too */
@@ -390,6 +395,35 @@ a:focus {
   padding: 0;
 }
 
+/*
+    Object: Button reset
+    ---
+    Small button reset object
+*/
+
+.o-button-reset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+  font: inherit;
+
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
+}
+
 /*------------------------------------*\
   #COMPONENTS
 \*------------------------------------*/
@@ -486,6 +520,33 @@ a:focus {
 }
 
 /*
+    Component: Modal
+    ---
+    Modal of the site
+*/
+.c-modal{
+  background-color: #fff;
+  color: #000;
+  margin: 0px 500px 0 500px;
+  display: flex;
+}
+
+.c-modal__content{
+  justify-content: space-around;
+}
+
+.c-modal__title{
+  color: #000;
+  align-items: flex-start;
+}
+
+.c-modal__modaltext{
+  color: #756c6c;
+
+}
+
+
+/*
     Component: Logo
     ---
     Main logo of the site
@@ -517,6 +578,11 @@ a:focus {
   display: none;
 }
 
+.c-header__logo,
+.c-header__title {
+  display: none;
+}
+
 @media (min-width: 992px) {
   .c-header__nav {
     display: block;
@@ -533,6 +599,69 @@ a:focus {
   .c-header__mobile-nav-trigger {
     display: none;
   }
+
+  .c-header__logo,
+  .c-header__title {
+    display: inline;
+  }
+}
+
+/*
+    Component: Title
+    ---
+    Title of the site
+*/
+.c-title{
+  display: none;
+}
+
+.c-title--center {
+  text-align: center;
+}
+
+.c-title--hide {
+  display: block;
+}
+
+@media (min-width: 992px) {
+  .c-title{
+    display: inline;
+  }
+
+  .c-title--hide{
+    display: none;
+  }
+}
+
+/*
+    Component: Status-bar
+    ---
+    Status-bar of the site
+*/
+
+.c-status-bar{
+  width: 200px;
+  background-color: #fff;
+  height: 300px;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.c-status-bar--9, 
+.c-status-bar--8,
+.c-status-bar--7,
+.c-status-bar--6,
+.c-status-bar--5,
+.c-status-bar--4,
+.c-status-bar--3,
+.c-status-bar--2,
+.c-status-bar--1,
+.c-status-bar--0{
+  background-color: #0000ff;
+  height: 30px;
+  width: 80%;
+  justify-self: center;
 }
 
 /*
@@ -551,8 +680,15 @@ a:focus {
 }
 
 .c-nav-trigger__svg {
-  fill: #202024;
+  fill: #fff;
   height: 100%;
+  cursor: pointer;
+}
+
+.c-nav-trigger__svg--arrow{
+  fill: #000;
+  height: 100%;
+  cursor: pointer;
 }
 
 .c-nav {
@@ -623,6 +759,10 @@ a:focus {
 
 .c-footer__text {
   color: #000;
+}
+
+.c-footer > a {
+  color: #0000ff;
 }
 
 /*
@@ -718,7 +858,7 @@ a:focus {
   background-color: #0000ff;
   background-size: 200% auto;
   box-shadow: inset 0 0 0 1px rgba(142, 199, 255, 0.2), 0 0 10px rgba(17, 149, 255, 0.3);
-  color:#fff ; 
+  color: #fff;
 }
 
 .c-btn-cta,

@@ -16,7 +16,7 @@ from model.LCD import LCD
 
 mcp = MCP()
 # waterlevel = Waterlevel()
-watertemp = Watertemp()
+#watertemp = Watertemp()
 lcd = LCD()
 
 
@@ -29,7 +29,7 @@ try:
     print("*** Program started ***")
     print(mcp.read_channel(0))
     print(mcp.read_channel(1))
-    print(watertemp.read_temp())
+    #print(watertemp.read_temp())
     #lcd.write_message("hello")
     lcd.get_ipaddress()
     
@@ -64,5 +64,5 @@ except KeyboardInterrupt as e:
 finally:
     mcp.closespi()
     # waterlevel.close_waterlevel()
-    watertemp.close_file()
+    #watertemp.close_file()
     GPIO.cleanup()
