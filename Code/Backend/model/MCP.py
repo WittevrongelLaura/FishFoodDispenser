@@ -1,4 +1,5 @@
 import spidev
+from model.LED import LED
 
 class MCP:
 
@@ -10,7 +11,7 @@ class MCP:
         # klokfreq intstellen op 100kHz
         self.spi.max_speed_hz = 10 ** 5
 
-    def OmzettenInPercentage(self, waarde):
+    def value_to_percentage(self, waarde):
         return (waarde/1023.0) * 100
 
     def closespi(self):
@@ -22,15 +23,15 @@ class MCP:
         channel = ch << 4 | 128
         # 0 << 4 = 0000 | 128 = 10000000 = dec:128
         # 1 << 4 = 1000 | 128 = 10001000 = dec:144
-        #print(channel)
+        # print(channel)
         # list met de 3 te versturen bytes
         bytes_out = [0b00000001, channel, 0b00000000]
-        #print(bytes_out)
+        # print(bytes_out)
         # versturen en 3 bytes terugkrijgen
         bytes_in = self.spi.xfer(bytes_out)
 
         # meetwaarde uithalen
-        #print(bytes_in)
+        # print(bytes_in)
         byte1 = bytes_in[1]
         byte2 = bytes_in[2]
         # bytes aan elkaar hangen
@@ -39,12 +40,23 @@ class MCP:
 
         # meetwaarde afdrukken
         if ch == 0:
-            
+
             # print(result)
             # print(format(self.OmzettenInPercentage(result), '.2f') + " %")
-            return format(self.OmzettenInPercentage(result), '.2f')
+            # return format(self.value_to_percentage(result), '.2f')
+            return result
         elif ch == 1:
             # print(result)
             # print(format(self.OmzettenInPercentage(result), '.2f') + " %")
-            return format(self.OmzettenInPercentage(result), '.2f')
-        
+            # return format(self.value_to_percentage(result), '.2f')
+            return result
+
+    def get_capacity(self):
+        value_up = mcp.read_channel(0)
+        value_under = mcp.read_channel(1)
+        print(value_up)
+        print(value_under)
+
+
+mcp = MCP()
+mcp.get_capacity()

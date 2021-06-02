@@ -1,6 +1,7 @@
 from RPi import GPIO
 import time
 from model.Shiftregister import Shiftregister
+from subprocess import check_output
 
 class LCD:
     def __init__(self, RS=23, E=18, SR=Shiftregister()):
@@ -51,6 +52,20 @@ class LCD:
 
     def clear_display(self):
         self.send_instruction(0x01)
+
+    def get_ipaddress(self):
+        self.clear_display()
+        #ip-adres teruggeven
+        ips = check_output(['hostname', '--all-ip-addresses']).split()
+        #wordt encoded bytes teruggestuurd dus decoderen
+        print(ips[0].decode())
+        self.write_message(ips[0].decode())
+
+        if len(ips) > 1:
+            #als er meerdere ip-adressen worden gereturnt
+            print(ips[1].decode())
+            self.send_instruction((0x80 | 0x40))
+            self.write_message(ips[1].decode())
 
     def setup_display(self):
         #LCD

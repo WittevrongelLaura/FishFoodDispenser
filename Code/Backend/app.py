@@ -27,9 +27,11 @@ try:
     socketio = SocketIO(app, cors_allowed_origins="*")
     CORS(app)  
     print("*** Program started ***")
-    #print(watertemp.read_temp())
+    print(mcp.read_channel(0))
+    print(mcp.read_channel(1))
+    print(watertemp.read_temp())
     #lcd.write_message("hello")
-    
+    lcd.get_ipaddress()
     
     ############socketio#######################
     @socketio.on('connect')
@@ -47,10 +49,10 @@ try:
     @socketio.on('F2B_createPhotodiodes')
     def create_photodiodes_in_db(jsonObject):
         print(jsonObject)
-        boven = jsonObject[0]
-        onder = jsonObject[1]
-        # DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  boven)
-        # DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  onder)
+        up = jsonObject[0]
+        under = jsonObject[1]
+        # DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  up)
+        # DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  under)
 
     if __name__ == "__main__":
         #app.run(debug=True)
@@ -62,5 +64,5 @@ except KeyboardInterrupt as e:
 finally:
     mcp.closespi()
     # waterlevel.close_waterlevel()
-    # watertemp.close_file()
-    #GPIO.cleanup()
+    watertemp.close_file()
+    GPIO.cleanup()

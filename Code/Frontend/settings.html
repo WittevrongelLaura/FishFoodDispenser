@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>FishFood Dispenser</title>
+        <meta name="description" content="This is the user interface for the FishFood Dispenser">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="msapplication-TileColor" content="#5051db"> <!--nog aanpassen-->
+        <meta name="theme-color" content="#5051db"> <!--nog aanpassen-->
+
+        <!-- <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"><!--nog aanpassen-->
+        <!-- <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"> -->
+        <!-- <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"> -->
+        <link rel="manifest" href="site.webmanifest">
+        <!-- <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5051db"> -->
+        <!-- font -->
+        <link rel="stylesheet" href="https://use.typekit.net/zyk2gul.css">
+        <link rel="stylesheet" href="style/normalize.css">
+        <link rel="stylesheet" href="style/index.css">
+        
+        <script src="https://cdn.socket.io/4.0.0/socket.io.min.js" integrity="sha384-DkkWv9oJFWLIydBXXjkBWnG1/fuVhw8YPBq37uvvD6WSYRFRqr21eY5Dg9ZhmWdy" crossorigin="anonymous"></script>
+        <script src="script/dataHandler.js"></script>
+        <script src="script/app.js"></script>
+    </head>
+    <body>
+        <div class="c-page">
+            <header class="c-header">
+                <h1>
+                    FishFoodDispenser
+                </h1>
+                <div class="c-header__nav">
+                    <nav class="c-nav">
+                      <ul class="o-list c-nav__list">
+                        <li class="c-nav__item"><a class="c-nav__link" href="index.html">Home</a></li>
+                        <li class="c-nav__item"><a class="c-nav__link" href="data.html">Data</a></li>
+                        <li class="c-nav__item"><a class="c-nav__link" href="settings.html">Settings</a></li>
+                        <li class="c-nav__item"><a class="c-nav__link" href="about.html">About</a></li>
+                        <li class="c-nav__item"><a class="c-nav__link" href="usermanuals.html">User Manuals</a></li>
+                      </ul>
+                    </nav>
+                </div>
+                
+            </header>
+            <section>
+                <h1>
+                    SETTINGS
+                </h1> 
+            </section>
+            <section>
+                <label for="feed_day">How many times a day will you feed?</label>
+                <input type="number" name="feed_day" id=feed_day min=1 max=2 value="1"><br>
+                <label for="amounts_gram">Amounts in gram for 1 time feeding:</label>
+                <input type="text" name="amounts_gram" id="amounts_gram" value="1"><br>
+                <label for=time_of_day>What time of the day?</label>
+                <input type="time" name="time_of_day" id="time_of_day">
+            </section>
+        </div>
+    </body>
+</html>
