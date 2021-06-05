@@ -16,11 +16,11 @@
     <!-- font -->
     <!-- <link rel="stylesheet" href="https://use.typekit.net/zyk2gul.css"> -->
     <link rel="stylesheet" href="style/normalize.css" />
-    <link rel="stylesheet" href="style/screen2.css" />
+    <link rel="stylesheet" href="style/screen.css" />
 
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js" integrity="sha384-DkkWv9oJFWLIydBXXjkBWnG1/fuVhw8YPBq37uvvD6WSYRFRqr21eY5Dg9ZhmWdy" crossorigin="anonymous"></script>
     <script src="script/dataHandler.js"></script>
-    <script src="script/app2.js"></script>
+    <script src="script/app.js"></script>
     <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/google" title="Google">Google</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
   </head>
   <body>
@@ -118,10 +118,9 @@
           </div>
         </div>
       </section>
-      <div class="o-row">
+      <footer class="c-footer o-row">
         <div class="o-container">
           <div class="o-section">
-            <footer class="c-footer"></footer>
             <div class="c-footer__logo">
               <?xml version="1.0" standalone="no"?>
               <svg class="c-logo__image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100.979 116.6" width="100.979" height="116.6">
@@ -140,45 +139,45 @@
                 </g>
               </svg>
             </div>
-            <div class="c-footer__text">
-              <h1>FishFood Dispenser</h1>
-              <p>About the maker</p>
-              <p>Website: <a href="http://laurawittevrongel.be/portfolio/">laurawittevrongel.be/portfolio/</a></p>
-              <p>Email: <a href="mailto:laura.wittevrongel@gmail.com">laura.wittevrongel@gmail.com</a></p>
+            <div class="c-footer__text o-row o-row--sm">
+              <h1 class="c-footer__title">FishFood Dispenser</h1>
+              <p class="c-footer__subtitle">About the maker
+              <div class="c-footer__item">Website: <a class="c-footer__link" href="http://laurawittevrongel.be/portfolio/">laurawittevrongel.be/portfolio/</a></div>
+              <div class="c-footer__item">Email: <a class="c-footer__link" href="mailto:laura.wittevrongel@gmail.com">laura.wittevrongel@gmail.com</a></div>
+              </p>
             </div>
-          </footer>
           </div>
+        </div>
+    </footer>
+    <aside class="c-mobile-nav">
+      <div class="c-mobile-nav__bg"></div>
+      <div class="c-mobile-nav__body">
+        <div class="c-mobile-nav__header">
+          <button class="o-button-reset c-nav-trigger js-toggle-nav">
+            <?xml version="1.0" encoding="iso-8859-1"?>
+            <svg class="c-nav-trigger__svg--arrow" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 256 256" style="enable-background: new 0 0 256 256" xml:space="preserve">
+              <g>
+                <g>
+                  <polygon points="79.093,0 48.907,30.187 146.72,128 48.907,225.813 79.093,256 207.093,128 		" />
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div class="c-mobile-nav__nav c-mobile-nav__nav--main">
+          <nav class="c-nav">
+            <ul class="o-list c-nav__list">
+              <li class="c-nav__item is-selected"><a class="c-nav__link" href="index.html">Home</a></li>
+              <li class="c-nav__item"><a class="c-nav__link" href="data.html">Data</a></li>
+              <li class="c-nav__item"><a class="c-nav__link" href="settings.html">Settings</a></li>
+              <li class="c-nav__item"><a class="c-nav__link" href="about.html">About</a></li>
+              <li class="c-nav__item"><a class="c-nav__link" href="usermanuals.html">User Manuals</a></li>
+            </ul>
+          </nav>
         </div>
       </div>
-      <aside class="c-mobile-nav">
-        <div class="c-mobile-nav__bg"></div>
-        <div class="c-mobile-nav__body">
-          <div class="c-mobile-nav__header">
-            <button class="o-button-reset c-nav-trigger js-toggle-nav">
-              <?xml version="1.0" encoding="iso-8859-1"?>
-              <svg class="c-nav-trigger__svg--arrow" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 256 256" style="enable-background: new 0 0 256 256" xml:space="preserve">
-                <g>
-                  <g>
-                    <polygon points="79.093,0 48.907,30.187 146.72,128 48.907,225.813 79.093,256 207.093,128 		" />
-                  </g>
-                </g>
-              </svg>
-            </button>
-          </div>
-          <div class="c-mobile-nav__nav c-mobile-nav__nav--main">
-            <nav class="c-nav">
-              <ul class="o-list c-nav__list">
-                <li class="c-nav__item is-selected"><a class="c-nav__link" href="index.html">Home</a></li>
-                <li class="c-nav__item"><a class="c-nav__link" href="data.html">Data</a></li>
-                <li class="c-nav__item"><a class="c-nav__link" href="settings.html">Settings</a></li>
-                <li class="c-nav__item"><a class="c-nav__link" href="about.html">About</a></li>
-                <li class="c-nav__item"><a class="c-nav__link" href="usermanuals.html">User Manuals</a></li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </aside>
-      <div class="o-section">
+    </aside>
+      <!-- <div class="o-section">
         <div class="o-layout">
           <div class="c-modal">
             <h3 class="c-modal__title o-layout__item">Feed mannualy</h3>
@@ -195,7 +194,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </body>
 </html>

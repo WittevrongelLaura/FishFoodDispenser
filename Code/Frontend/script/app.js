@@ -25,11 +25,18 @@ const listenToClickFeedManually = function(){
 }
 //#endregion
 
+//#region ***  UI Listeners - listenTo___ ***
 const listenToUI = function(){
     toggleNav();
 
     //values opvragen van meegestuurde channels
-    socket.emit("F2B_getValuesPhotodiodes", {ch: [0, 1]})
+    socket.emit("F2B_getValuesPhotodiodes", {ch: [0, 1]});
+
+    //watertemp opvragen
+    socket.emit("F2B_getWaterTemp", "get watertemp");
+
+    //watercapaciteit opvragen
+    socket.emit("F2B_getCapacity", "get capacity container");
 }
 
 const listenToSocket = function(){
@@ -55,8 +62,16 @@ const listenToSocket = function(){
     //     })
         
     // })
+
+    socket.on('B2F_value_watertemp', function(jsonObject){
+        console.log(jsonObject);
+    })
     
+    socket.on('B2F_value_capacity', function(jsonObject){
+        console.log(jsonObject);
+    })
 }
+//#endregion
 
 const toggleNav = function(){
     for (let i = 0; i < htmlToggleNav.length; i++) {

@@ -132,3 +132,38 @@ Hier komt de feedforward: wat ga ik concreet doen?
 
 - [x] ToDo 1: 1 tabel voor alle componenten maken en een action tabel toevoegen. Die tabellen toevoegen aan de historiek tabel.
 - [x] ToDo 2: Indexen plaatsen op de naam van het component en de actie beschrijving.
+
+## Gesprek 6 (Datum: 4/06/2021)
+
+Lector: Dieter
+
+Vragen voor dit gesprek:
+
+- [x] vraag 1: website laadt niet op gsm.
+- [x] vraag 2: Chrome neemt verkeerde script over dan dat er gelinkt werd in de html. Waardoor ik de hele tijd de naam verander in de html script-tag.
+
+Dit is de feedback op mijn vragen.
+
+- feedback 1: // (opgelost voordat consult begon, 5min laten openstaan en website laadde plots)
+- feedback 2: Blijven duwen op de herlaad-knop in Chrome dan "Cache wissen en herladen"
+
+Hier komt de feedforward: wat ga ik concreet doen?
+
+- [x] ToDo 1: Werkt nu iedere keer ik ernaartoe surf
+- [x] ToDo 2: Naam van de scripts niet meer veranderen en op de knop cache wissen en herladen klikken.
+
+## Gesprek 7 (Datum: 4/06/2021)
+
+Lector: Pieter-Jan
+
+Vragen voor dit gesprek:
+
+- [x] vraag 1: fotodiode geeft weinig verschil in waarde bij het lezen van een licht en het lezen van een diode met minder licht (zoals hand erboven)
+
+Dit is de feedback op mijn vragen.
+
+- feedback 1: schakeling iets anders opbouwen, zoals de fotodiode wisselen met de weerstand of de fotodiode wisselen met een LDR
+
+Hier komt de feedforward: wat ga ik concreet doen?
+
+- [x] ToDo 1: Nog wat verder testen met de fotodiode die nu anders geschakeld is, als het niet lukt een LDR gaan kopen.

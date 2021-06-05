@@ -1,5 +1,7 @@
 import spidev
-from model.LED import LED
+#from model.LED import LED
+from LED import LED
+import time
 
 class MCP:
 
@@ -10,6 +12,8 @@ class MCP:
         self.spi.open(0, 0)  # bus 0(SPI0)  device 0(slave op CE 0)
         # klokfreq intstellen op 100kHz
         self.spi.max_speed_hz = 10 ** 5
+
+        self.led = led
 
     def value_to_percentage(self, waarde):
         return (waarde/1023.0) * 100
@@ -40,7 +44,6 @@ class MCP:
 
         # meetwaarde afdrukken
         if ch == 0:
-
             # print(result)
             # print(format(self.OmzettenInPercentage(result), '.2f') + " %")
             # return format(self.value_to_percentage(result), '.2f')
@@ -51,12 +54,63 @@ class MCP:
             # return format(self.value_to_percentage(result), '.2f')
             return result
 
+    def convert_to_percentage(self, value):
+        return(value/1023.0) * 100
+
     def get_capacity(self):
-        value_up = mcp.read_channel(0)
-        value_under = mcp.read_channel(1)
+        value_up = self.read_channel(0)
+        value_under = self.read_channel(1)
         print(value_up)
         print(value_under)
+        print()
+        print(round(self.convert_to_percentage(value_up),2))
+        print(round(self.convert_to_percentage(value_under),2))
+        print()
+        print()
+        # difference = value_up - value_under
+        # #positief maken
+        # difference = abs(difference)
+        # print(difference)
+        # if difference >= 0 and difference <=20:
+        #     print("Leeg")
+        #     self.led.led_on("red")
+        
+        # if difference > 20:
+        #     print("vol")
+        #     self.led.led_on("green")
 
 
-mcp = MCP()
-mcp.get_capacity()
+
+        # 430 -> 100% (blijft altijd hetzelfde dus 100%)
+
+        # 693 -> 116%
+
+        # hoe meer licht, hoe lager waarde
+
+
+        # 1023-430=593
+        # 1023-693=330
+        
+
+        # 593 -> 100%
+        # 330 -> 55.64%
+
+        # 430/1023*100=42%
+        # 100-42= 58%
+
+        # 693/1023*100=67
+        # 100-67= 37%
+
+# led = LED()
+# mcp = MCP(led)
+
+# try:
+#     while True:
+#         mcp.get_capacity()
+#         time.sleep(1)
+# except KeyboardInterrupt as e:
+#     print(e)
+# finally:
+#     led.all_leds_off() 
+
+

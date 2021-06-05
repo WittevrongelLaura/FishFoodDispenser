@@ -1,6 +1,7 @@
 from RPi import GPIO
 import time
-from model.Shiftregister import Shiftregister
+#from model.Shiftregister import Shiftregister
+from Shiftregister import Shiftregister
 from subprocess import check_output
 
 class LCD:
@@ -77,6 +78,8 @@ class LCD:
         self.clear_display()
         # #cursor home
         #send_instruction(0x40) 
+
+    
 
 # try:
 #     lcd = LCD()
