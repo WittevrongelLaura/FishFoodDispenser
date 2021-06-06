@@ -133,7 +133,26 @@ Hier komt de feedforward: wat ga ik concreet doen?
 - [x] ToDo 1: 1 tabel voor alle componenten maken en een action tabel toevoegen. Die tabellen toevoegen aan de historiek tabel.
 - [x] ToDo 2: Indexen plaatsen op de naam van het component en de actie beschrijving.
 
-## Gesprek 6 (Datum: 4/06/2021)
+## Gesprek 6 (Datum: 28/05/2021)
+
+Lector: Geert
+
+Vragen voor dit gesprek:
+
+- [x] vraag 1: Waardes uit de waterlevel zien er wat raar uit, hoe kan ik ze interpreteren?
+- [x] vraag 2: Hoe soldeer ik de versterker? De pinnen in de kit zijn te groot om erin te passen.
+
+Dit is de feedback op mijn vragen.
+
+- feedback 1: Wat Arduino code op internet gevonden en daarop kan je de code baseren?
+- feedback 2: Pinnen van male draden gebruiken om ze te solderen
+
+Hier komt de feedforward: wat ga ik concreet doen?
+
+- [x] ToDo 1: Arduino code bekijken en proberen programmeren.
+- [x] ToDo 2: Male pinnen solderen aan de versterker.
+
+## Gesprek 7 (Datum: 4/06/2021)
 
 Lector: Dieter
 
@@ -152,7 +171,7 @@ Hier komt de feedforward: wat ga ik concreet doen?
 - [x] ToDo 1: Werkt nu iedere keer ik ernaartoe surf
 - [x] ToDo 2: Naam van de scripts niet meer veranderen en op de knop cache wissen en herladen klikken.
 
-## Gesprek 7 (Datum: 4/06/2021)
+## Gesprek 8 (Datum: 4/06/2021)
 
 Lector: Pieter-Jan
 
@@ -167,3 +186,27 @@ Dit is de feedback op mijn vragen.
 Hier komt de feedforward: wat ga ik concreet doen?
 
 - [x] ToDo 1: Nog wat verder testen met de fotodiode die nu anders geschakeld is, als het niet lukt een LDR gaan kopen.
+
+
+## Gesprek 7 (Datum: 7/06/2021)
+
+Lector: Claudia
+
+Vragen voor dit gesprek:
+
+- [x] vraag 1: Kleur van link uit css wordt niet overgenomen, hoewel bij een link eronder het wel lukt.
+- [x] vraag 2: Aside "display: none" werkt niet.
+- [x] vraag 3: Footer op het einde van de pagina krijgen, niet fixed.
+
+
+Dit is de feedback op mijn vragen.
+
+- feedback 1: 
+- feedback 2: 
+- feedback 3:
+
+Hier komt de feedforward: wat ga ik concreet doen?
+
+- [x] ToDo 1: 
+- [x] ToDo 2: 
+- [x] ToDo 3: 
