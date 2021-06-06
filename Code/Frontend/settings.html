@@ -88,12 +88,20 @@
         <div class="o-container">
             <div class="o-section">
                 <div class="o-layout">
-                    <label class="o-layout__item" for="feed_day">How many times a day will you feed?</label>
-                    <input class="o-layout__item" type="number" name="feed_day" id="feed_day" min="1" max="2" value="1" /><br />
-                    <label class="o-layout__item" for="amounts_gram">Amounts in gram for 1 time feeding:</label>
-                    <input class="o-layout__item" type="text" name="amounts_gram" id="amounts_gram" value="1" /><br />
-                    <label class="o-layout__item" for="time_of_day">What time of the day?</label>
-                    <input class="o-layout__item" type="time" name="time_of_day" id="time_of_day" />
+                    <form>
+                      <label class="o-layout__item" for="amounts_gram">Number of grams for 1 time feeding:</label>
+                      <input class="o-layout__item" type="text" name="amounts_gram" id="amounts_gram" value="10" min="1" /><br />
+                      <label class="o-layout__item" for="time_of_day">What time of the day?</label>
+                      <input class="o-layout__item" type="time" name="time_of_day" id="time_of_day" value="19:00" /><br>
+                      <label class="o-layout__item" for="activate_sensors">Activate sensors:</label><br>
+                      <input class="o-layout__item" type="checkbox" value="watertemp" name="watertemp" id="watertemp">
+                      <label class="o-layout__item" for="watertemp" >Watertemperature</label><br>
+                      <input class="o-layout__item" type="checkbox" value="waterlevel" name="waterlevel" id="waterlevel">
+                      <label class="o-layout__item" for="waterlevel" >Waterlevel</label><br>
+                      <input class="o-layout__item" type="checkbox" value="speaker" name="speaker" id="speaker">
+                      <label class="o-layout__item" for="speaker" >Speaker</label><br>
+                      <button class="c-btn-cta c-btn-cta--link" type="submit">Save</button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -194,9 +194,10 @@ Lector: Claudia
 
 Vragen voor dit gesprek:
 
-- [x] vraag 1: Kleur van link uit css wordt niet overgenomen, hoewel bij een link eronder het wel lukt.
-- [x] vraag 2: Aside "display: none" werkt niet.
-- [x] vraag 3: Footer op het einde van de pagina krijgen, niet fixed.
+- [x] vraag 1: Aside "display: none" werkt niet.
+- [x] vraag 2: Footer op het einde van de pagina krijgen, niet fixed.
+- [x] vraag 3: Header fixed
+
 
 
 Dit is de feedback op mijn vragen.

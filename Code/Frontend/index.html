@@ -96,20 +96,21 @@
                 <input type="submit" class="js-verzend-data"></input> -->
                 <div class="o-layout__item"><h2 class="c-status__title">Status</h2></div>
                 <div class="o-layout__item">
-                  <div class="c-status-bar">
-                    <div class="c-status-bar--9"></div>
-                    <div class="c-status-bar--8"></div>
-                    <div class="c-status-bar--7"></div>
-                    <div class="c-status-bar--6"></div>
-                    <div class="c-status-bar--5"></div>
-                    <div class="c-status-bar--4"></div>
-                    <div class="c-status-bar--3"></div>
-                    <div class="c-status-bar--2"></div>
-                    <div class="c-status-bar--1"></div>
-                    <div class="c-status-bar--0"></div>
+                  <div class="c-status-bar o-layout--align-center o-layout--row-column">
+                    <div class="c-status-bar--9 o-layout--justify-center c-status-bar--full"></div>
+                    <div class="c-status-bar--8 o-layout--justify-center c-status-bar--full"></div>
+                    <div class="c-status-bar--7 o-layout--justify-center c-status-bar--full"></div>
+                    <div class="c-status-bar--6 o-layout--justify-center c-status-bar--full"></div>
+                    <div class="c-status-bar--5 o-layout--justify-center c-status-bar--full"></div>
+                    <div class="c-status-bar--4 o-layout--justify-center c-status-bar--almost-empty"></div>
+                    <div class="c-status-bar--3 o-layout--justify-center c-status-bar--almost-empty"></div>
+                    <div class="c-status-bar--2 o-layout--justify-center c-status-bar--almost-empty"></div>
+                    <div class="c-status-bar--1 o-layout--justify-center c-status-bar--empty"></div>
+                    <div class="c-status-bar--0 o-layout--justify-center c-status-bar--empty"></div>
                   </div>
                 </div>
-                <div class="o-layout__item status_message"><p>The container is almost empty!</p></div>
+                <div class="o-layout__item js-status-percentage c-status-bar__percentage">20%</div>
+                <div class="o-layout__item js-status-message c-status-bar__message"><p>The container is almost empty!</p></div>
                 <div class="o-layout__item btn_feedmanually">
                   <div class="c-btn-cta js-btn-feedmanually">
                     <a class="c-btn-cta--link" href="#!">Feed manually</a>
@@ -182,24 +183,24 @@
         </div>
       </div>
     </aside>
-      <!-- <div class="o-section">
-        <div class="o-layout">
-          <div class="c-modal">
-            <h3 class="c-modal__title o-layout__item">Feed mannualy</h3>
-            <hr />
-            <div class="c-modal__content">
-              <div class="o-layout__item"">
-                <label for="amount" class="c-modal__modaltext">Amount in gram: </label>
-                <input type="text" class="c-modal__modalamount" id="amount" min="10" max="30" value="10" />
-              </div>
-              <div class="o-layout__item"">
-                <button class="c-modal__btncancel">CANCEL</button>
-                <button class="c-modal__btnfeed">FEED</button>
-              </div>
+    <div class="o-section">
+      <div class="o-layout">
+        <div class="c-modal">
+          <h3 class="c-modal__title o-layout__item">Feed mannualy</h3>
+          <hr />
+          <div class="c-modal__content">
+            <div class="o-layout__item"">
+              <label for="amount" class="c-modal__modaltext">Amount in gram: </label>
+              <input type="text" class="c-modal__modalamount" id="amount" min="10" max="30" value="10" />
+            </div>
+            <div class="o-layout__item"">
+              <button class="c-modal__btncancel">CANCEL</button>
+              <button class="c-modal__btnfeed">FEED</button>
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
+    </div>
     </div>
   </body>
 </html>

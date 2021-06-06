@@ -71,8 +71,9 @@ img {
     Default markup for the header
 */
 
-header {
+header{
   position: fixed;
+  top: 0;
 }
 
 /*
@@ -339,6 +340,10 @@ a:focus {
   flex-direction: row-reverse;
 }
 
+.o-layout--row-column {
+  flex-direction: column;
+}
+
 /* Horizontal alignment modifiers*/
 
 .o-layout--justify-start {
@@ -550,6 +555,7 @@ a:focus {
     Modal of the site
 */
 .c-modal {
+  position: relative;
   background-color: #fff;
   color: #000;
   margin: 0px 500px 0 500px;
@@ -672,7 +678,7 @@ a:focus {
   height: 300px;
   border-radius: 10px;
   display: flex;
-  align-items: flex-end;
+  margin: auto;
 }
 
 .c-status-bar--9,
@@ -685,10 +691,34 @@ a:focus {
 .c-status-bar--2,
 .c-status-bar--1,
 .c-status-bar--0 {
-  background-color: #0000ff;
   height: 30px;
-  width: 80%;
-  justify-self: center;
+  width: 95%;
+  margin: 1px 1px 1px 1px;
+}
+
+.c-status-bar--full{
+  background-color: #06b62c;
+}
+.c-status-bar--almost-empty{
+  background-color: #d8db03;
+}
+.c-status-bar--empty{
+  background-color: #d30505;
+}
+
+.c-status-bar--9{
+  border-radius: 10px 10px 0 0;
+  margin-top: 2px;
+}
+
+.c-status-bar--0 {
+  border-radius: 0 0 10px 10px;
+  margin-bottom: 2px;
+}
+
+.c-status-bar__percentage {
+  font-size: 30px;
+  margin: 30px;
 }
 
 /*
@@ -780,7 +810,7 @@ a:focus {
   bottom: 0;
   background-color: #ffffff;
   display: flex;
-  padding-top: 0px;
+  align-self: flex-end;
 }
 
 .c-footer__logo {
@@ -934,6 +964,11 @@ a:focus {
 
 .c-btn-cta--link {
   text-decoration: none;
+  color: #ffffff
+}
+
+.c-btn-cta a{
+  color: #ffffff;
 }
 
 .c-btn-cta,
