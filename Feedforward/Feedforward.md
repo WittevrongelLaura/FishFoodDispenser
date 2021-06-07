@@ -196,15 +196,14 @@ Vragen voor dit gesprek:
 
 - [x] vraag 1: Aside "display: none" werkt niet.
 - [x] vraag 2: Footer op het einde van de pagina krijgen, niet fixed.
-- [x] vraag 3: Header fixed
 
 
 
 Dit is de feedback op mijn vragen.
 
-- feedback 1: 
-- feedback 2: 
-- feedback 3:
+- feedback 1: display op none zetten voor iedere viewport en in js aanpassen
+- feedback 2: body: display flexbox, column maken en dan proberen die footer beneden te krijgen
+
 
 Hier komt de feedforward: wat ga ik concreet doen?
 

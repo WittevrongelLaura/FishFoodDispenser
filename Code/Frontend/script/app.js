@@ -6,6 +6,7 @@ const socket = io(lanIP);
 //#region ***  DOM references ***
 let htmlHome, htmlData, htmlSettings, htmlAbout, htmlUserManuals;
 let htmlFotodiodeBoven, htmlFotodiodeOnder, htmlBtnCreateValues, htmlToggleNav, htmlBtnFeedManually;
+let htmlTemp, htmlWaterlevel;
 //#endregion
 
 //#region ***  Callback-Visualisation - show___ ***
@@ -30,13 +31,23 @@ const listenToUI = function(){
     toggleNav();
 
     //values opvragen van meegestuurde channels
-    socket.emit("F2B_getValuesPhotodiodes", {ch: [0, 1]});
+    //socket.emit("F2B_getValuesPhotodiodes", {ch: [0, 1]});
 
+    /***index.html***/
     //watertemp opvragen
     socket.emit("F2B_getWaterTemp", "get watertemp");
 
     //watercapaciteit opvragen
-    socket.emit("F2B_getCapacity", "get capacity container");
+    // socket.emit("F2B_getCapacity", "get capacity container");
+
+
+    /***Analysis.html***/
+    //get all data
+    const getDataFromDb = function(){
+        socket.emit("F2B_getAllData", "get data");
+    }
+    
+    
 }
 
 const listenToSocket = function(){
@@ -64,12 +75,16 @@ const listenToSocket = function(){
     // })
 
     socket.on('B2F_value_watertemp', function(jsonObject){
-        console.log(jsonObject);
+        console.log(jsonObject.temp)
+        let html = `<p>${jsonObject.temp}°C</p>`;
+        htmlTemp.innerHTML = html;
     })
     
-    socket.on('B2F_value_capacity', function(jsonObject){
-        console.log(jsonObject);
-    })
+    // socket.on('B2F_value_capacity', function(jsonObject){
+    //     console.log(jsonObject.level)
+    //     let html = `<p>${jsonObject.level}°C</p>`;
+    //     htmlWaterlevel.innerHTML = html;
+    // })
 }
 //#endregion
 
@@ -96,7 +111,9 @@ const init = function () {
     htmlAbout = document.querySelectorAll(".js-about");
     htmlUserManuals = document.querySelectorAll(".js-usermanuals");
 
-    htmlBtnFeedManually = document.querySelector('.js-btn-feedmanually')
+    htmlTemp = document.querySelector('.js-watertemp');
+    htmlWaterlevel = document.querySelector('.js-waterlevel');
+    htmlBtnFeedManually = document.querySelector('.js-btn-feedmanually');
     
     
     listenToSocket();
@@ -104,6 +121,11 @@ const init = function () {
 
     if(htmlHome){
         listenToClickFeedManually();
+    }
+
+    if(htmlData){
+        console.log("on data page")
+        getDataFromDb()
     }
 
 };

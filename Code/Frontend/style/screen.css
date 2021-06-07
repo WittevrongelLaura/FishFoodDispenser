@@ -27,10 +27,18 @@ html {
   letter-spacing: 1px;
 }
 
+body{
+  display: flex;
+  flex-direction: column;
+}
+
+
+
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+  box-sizing: border-box;
+  margin: 0;
 }
 
 /*
@@ -455,6 +463,16 @@ a:focus {
 \*------------------------------------*/
 
 /*
+    Component: content
+    ---
+    Content component
+*/
+.c-content{
+  flex: 1;
+  padding: 1.5rem
+}
+
+/*
     Component: mobile nav
     ---
     Dedicated mobile nav component
@@ -535,6 +553,10 @@ a:focus {
 .has-mobile-nav .c-mobile-nav__body {
   transform: translateX(0);
 }
+
+/* .c-mobile-nav{
+  display: none;
+} */
 
 @media (min-width: 768px) {
   .c-mobile-nav__body {
@@ -804,13 +826,11 @@ a:focus {
 */
 
 .c-footer {
-  position: relative;
   width: 100%;
   height: 25%;
   bottom: 0;
   background-color: #ffffff;
-  display: flex;
-  align-self: flex-end;
+  flex-shrink: 0;
 }
 
 .c-footer__logo {

@@ -1,7 +1,7 @@
 from RPi import GPIO
 import time
-#from model.Shiftregister import Shiftregister
-from Shiftregister import Shiftregister
+from model.Shiftregister import Shiftregister
+#from Shiftregister import Shiftregister
 from subprocess import check_output
 
 class LCD:

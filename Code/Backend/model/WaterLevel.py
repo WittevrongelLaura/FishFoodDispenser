@@ -5,31 +5,54 @@ from smbus import SMBus
 
 class Waterlevel:
 
-    def __init__(self, slave_address=0x78, i2c=SMBus()):
+    def __init__(self, i2c=SMBus()):
         # commando: i2cdetect -y 1 --> 0x77
-        self.slave_address = slave_address
+        self.arr_allvalues = None
         self.i2c = i2c
         self.setup()
 
     def setup(self):
         self.i2c.open(1)
 
-    def __read_data(self, register_address, amount):
-        arr = self.i2c.read_i2c_block_data(
-            self.slave_address, register_address, amount)
-        print("read data")
-        # print(arr)
-
-        # values = []
-        # for i in range(0, amount, 2):
-        #     byte = self.bytes_shifting(arr[i], arr[i+1])
-        #     values.append(byte)
-        # print("bit shifted data")
+    def __read_data(self, slave_address, register_address, amount):
+        arr = self.i2c.read_i2c_block_data(slave_address, register_address, amount)
+        
         return arr
 
     def read_waterlevel(self):
-        values = self.__read_data(0x01, 12)
-        return values
+        #bovenste 12 inlezen -> slave address 0x78
+        arr_values_12 = self.__read_data(0x78, 0x01, 12)
+
+        #bovenste 8 inlezen -> slave address 0x77
+        arr_values_8 = self.__read_data(0x77, 0x01, 8)
+
+        self.arr_allvalues = arr_values_8 + arr_values_12
+        #print(self.arr_allvalues)
+        # self.get_percentage(self.arr_allvalues)
+        return self.get_percentage(self.arr_allvalues)
+
+    @staticmethod
+    def get_percentage(arr):
+        arr_values = []
+        count = 0
+        for i in arr:
+            #print(i)
+            if i == 0:
+                arr_values.append(0)
+            else:
+                arr_values.append(1)
+                
+        for i in arr_values:
+            if i == 1:
+                count +=1 
+
+        
+        length = len(arr_values)
+
+        percentage = round((count / length) * 100)
+        #print(percentage)
+
+        return percentage
 
     @staticmethod
     def bytes_shifting(msb, lsb):
@@ -43,21 +66,18 @@ class Waterlevel:
 
         return value
 
-    def print_data(self):
-        print(self.read_waterlevel())
-
     def close_waterlevel(self):
         self.i2c.close()
 
 
-# try:
-#     waterlevel = Waterlevel()
-#     while True:
-#         waterlevel.print_data()
-#         print()
-#         time.sleep(1)
+try:
+    waterlevel = Waterlevel()
+    while True:
+        
+        print(waterlevel.read_waterlevel())
+        time.sleep(1)
 
-# except KeyboardInterrupt as e:
-#     print(e)
-# finally:
-#     waterlevel.close_waterlevel()
+except KeyboardInterrupt as e:
+    print(e)
+finally:
+    waterlevel.close_waterlevel()

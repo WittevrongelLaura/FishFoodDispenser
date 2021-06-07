@@ -1,11 +1,11 @@
 import spidev
-#from model.LED import LED
-from LED import LED
+from model.LED import LED
+#from LED import LED
 import time
 
 class MCP:
 
-    def __init__(self, bus=0, device=0):
+    def __init__(self, bus=0, device=0, led=LED()):
         # initialiseer een SpiDev-object
         self.spi = spidev.SpiDev()
         # slave kiezen, bus is het nr van de SPI-bus, device is nr van SS/CE/CS-lijn

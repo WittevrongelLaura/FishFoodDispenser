@@ -28,6 +28,8 @@ try:
     socketio = SocketIO(app, cors_allowed_origins="*")
     CORS(app)  
     print("*** Program started ***")
+    value_watertemp = watertemp.read_temp()
+    print(value_watertemp)
     # print(mcp.read_channel(0))
     # print(mcp.read_channel(1))
     #lcd.write_message("hello")
@@ -41,11 +43,11 @@ try:
         user = request.sid
         emit("B2F_connection", f"Welkom nieuwe client {user}")
 
-    @socketio.on('F2B_getValuesPhotodiodes')
-    def get_values_photodiodes(jsonObject):
-        print("De backend kreeg dit het jsonObject binnen: ")
-        #print(jsonObject)
-        emit('B2F_getValuesPhotodiodes', [mcp.read_channel(0),  mcp.read_channel(1)])
+    # @socketio.on('F2B_getValuesPhotodiodes')
+    # def get_values_photodiodes(jsonObject):
+    #     print("De backend kreeg dit het jsonObject binnen: ")
+    #     #print(jsonObject)
+    #     emit('B2F_getValuesPhotodiodes', [mcp.read_channel(0),  mcp.read_channel(1)])
 
     # @socketio.on('F2B_createPhotodiodes')
     # def create_photodiodes_in_db(jsonObject):
@@ -59,7 +61,7 @@ try:
     def get_value_watertemp(jsonObject):
         value_watertemp = watertemp.read_temp()
         print(value_watertemp)
-        emit("B2F_value_watertemp", value_watertemp)
+        emit("B2F_value_watertemp", {"temp":value_watertemp}, broadcast=True)
 
         
 
