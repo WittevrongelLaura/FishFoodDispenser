@@ -9,14 +9,14 @@ from repositories.DataRepository import DataRepository
 from datetime import date, datetime
 
 from model.MCP import MCP
-# from model.WaterLevel import Waterlevel
+from model.WaterLevel import Waterlevel
 from model.Watertemp import Watertemp
 from model.LCD import LCD
 from model.LED import LED
 
 led = LED()
 mcp = MCP(led)
-# waterlevel = Waterlevel()
+waterlevel = Waterlevel()
 watertemp = Watertemp()
 lcd = LCD()
 #print(datetime.now())
@@ -63,7 +63,13 @@ try:
         print(value_watertemp)
         emit("B2F_value_watertemp", {"temp":value_watertemp}, broadcast=True)
 
-        
+    @socketio.on('F2B_getWaterlevel')
+    def get_value_waterlevel(jsonObject):
+        value_waterlevel = waterlevel.read_waterlevel()
+        print(value_waterlevel)
+        emit("B2F_value_watertemp", {"temp":value_waterlevel}, broadcast=True)
+
+          
 
         
 
