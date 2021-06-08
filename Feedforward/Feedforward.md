@@ -98,7 +98,27 @@ Hier komt de feedforward: wat ga ik concreet doen?
 - [x] ToDo 1: /
 - [x] ToDo 2: print statements vervangen door return waarde
 
-## Gesprek 4 (Datum: 27/05/2021)
+
+## Gesprek 4 (Datum: 26/05/2021)
+
+TOERMOMENT 1
+Lectoren: Claudia, Geert, Frederik
+
+Vragen voor dit gesprek:
+
+- [x] vraag 1: / (geen vragen gesteld)
+
+
+Dit is de feedback.
+
+- feedback 1: alles al geschakeld, lichtsensor data in de console
+
+Hier komt de feedforward: wat ga ik concreet doen?
+
+- [x] ToDo 1: /
+
+
+## Gesprek 5 (Datum: 27/05/2021)
 
 Lector: Dieter
 
@@ -114,7 +134,7 @@ Hier komt de feedforward: wat ga ik concreet doen?
 
 - [x] ToDo 1: surfen naar 192.168.168.168
 
-## Gesprek 5 (Datum: 27/05/2021)
+## Gesprek 6 (Datum: 27/05/2021)
 
 Lector: Frederik
 
@@ -133,7 +153,7 @@ Hier komt de feedforward: wat ga ik concreet doen?
 - [x] ToDo 1: 1 tabel voor alle componenten maken en een action tabel toevoegen. Die tabellen toevoegen aan de historiek tabel.
 - [x] ToDo 2: Indexen plaatsen op de naam van het component en de actie beschrijving.
 
-## Gesprek 6 (Datum: 28/05/2021)
+## Gesprek 7 (Datum: 28/05/2021)
 
 Lector: Geert
 
@@ -152,7 +172,27 @@ Hier komt de feedforward: wat ga ik concreet doen?
 - [x] ToDo 1: Arduino code bekijken en proberen programmeren.
 - [x] ToDo 2: Male pinnen solderen aan de versterker.
 
-## Gesprek 7 (Datum: 4/06/2021)
+## Gesprek 8 (Datum: 3/06/2021)
+
+TOERMOMENT 2
+Lectoren: Pieter-Jan, Simon
+
+Vragen voor dit gesprek:
+
+- [x] vraag 1: / (geen vragen gesteld)
+
+Dit is de feedback op mijn MVP.
+
+- feedback 1: Het belangrijkste van de website moet op de homepage staan, niet nog eens op een 2e pagina
+
+
+Hier komt de feedforward: wat ga ik concreet doen?
+
+- [x] ToDo 1: De belangrijkste data op de homepagina plaatsen
+
+
+
+## Gesprek 9 (Datum: 4/06/2021)
 
 Lector: Dieter
 
@@ -171,7 +211,7 @@ Hier komt de feedforward: wat ga ik concreet doen?
 - [x] ToDo 1: Werkt nu iedere keer ik ernaartoe surf
 - [x] ToDo 2: Naam van de scripts niet meer veranderen en op de knop cache wissen en herladen klikken.
 
-## Gesprek 8 (Datum: 4/06/2021)
+## Gesprek 10 (Datum: 4/06/2021)
 
 Lector: Pieter-Jan
 
@@ -188,7 +228,7 @@ Hier komt de feedforward: wat ga ik concreet doen?
 - [x] ToDo 1: Nog wat verder testen met de fotodiode die nu anders geschakeld is, als het niet lukt een LDR gaan kopen.
 
 
-## Gesprek 7 (Datum: 7/06/2021)
+## Gesprek 11 (Datum: 7/06/2021)
 
 Lector: Claudia
 
@@ -196,7 +236,6 @@ Vragen voor dit gesprek:
 
 - [x] vraag 1: Aside "display: none" werkt niet.
 - [x] vraag 2: Footer op het einde van de pagina krijgen, niet fixed.
-
 
 
 Dit is de feedback op mijn vragen.
@@ -207,6 +246,28 @@ Dit is de feedback op mijn vragen.
 
 Hier komt de feedforward: wat ga ik concreet doen?
 
+- [x] ToDo 1: display op none zetten en de aside zichtbaar maken met js
+- [x] ToDo 2: kolommen maken van de body en die footer proberen op het einde te zetten
+
+
+## Gesprek 12 (Datum: 8/06/2021)
+
+Lector: Pieter-Jan
+
+Vragen voor dit gesprek:
+
+- [x] vraag 1: Bij het runnen van de temperatuur sensor krijg ik een exception "no such file or directory" terwijl alles aangesloten is en dat file wel degelijk te vinden is in de bestanden op de rpi.
+- [x] vraag 2: Commando uitvoeren van de speaker met check_output werkt niet.
+
+
+
+Dit is de feedback op mijn vragen.
+
+- feedback 1: bij het opzoeken van de file en daarna het programma runnen lukt dit wel dus, eerst het commando runnen met check_output
+- feedback 2: 
+
+
+Hier komt de feedforward: wat ga ik concreet doen?
+
 - [x] ToDo 1: 
 - [x] ToDo 2: 
-- [x] ToDo 3: 

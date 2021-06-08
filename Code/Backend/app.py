@@ -35,6 +35,8 @@ try:
     #lcd.write_message("hello")
     
     # lcd.get_ipaddress()
+
+    
     
     ############socketio#######################
     @socketio.on('connect')

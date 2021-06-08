@@ -3,84 +3,58 @@ import time
 
 
 class Servo:
-    def __init__(self, servo_up=12, servo_left=24, servo_right=25):
-        self.servo_up = servo_up
-        self.servo_left = servo_left
-        self.servo_right = servo_right
+    def __init__(self, servo=12):
+        self.servo = servo
 
-        self.pwm_servo_up = None
-        self.pwm_servo_left = None
-        self.pwm_servo_right = None
+        self.pwm_servo = None
 
         self.is_running = False
 
         GPIO.setmode(GPIO.BCM)
-        self.arr_servos = [servo_up, servo_left, servo_right]
+                
+        GPIO.setup(self.servo, GPIO.OUT)
 
-        for servo in self.arr_servos:
-            GPIO.setup(servo, GPIO.OUT)
-
-        self.setup_pwm(self.arr_servos)
+        self.setup_pwm(self.servo)
 
     def setup_pwm(self, pin):
-        self.pwm_servo_up = GPIO.PWM(self.arr_servos[0], 50)
-        self.pwm_servo_left = GPIO.PWM(self.arr_servos[1], 50)
-        self.pwm_servo_right = GPIO.PWM(self.arr_servos[2], 50)
+        self.pwm_servo = GPIO.PWM(self.servo, 50)
+        
         # for pin in arr_pins:
         #     pwm.append(GPIO.PWM(pin, 50))
 
 
-    def start_servo(self, servo):
+    def start_servo(self):
         # self.angle = self.calc_angle(value)
         # self.duty = self.angle / 18 + 2
         # self.pwm.start(self.duty)
         # time.sleep(1)
-        if servo == "up":
-            self.pwm_servo_right.start(0)
-            time.sleep(1)
-            self.set_duty_cycle("up", 3)
-            time.sleep(1)
-            self.set_duty_cycle("up", 12)
+        
+        
+        time.sleep(0.5)
+        self.set_duty_cycle(3)
+        time.sleep(0.5)
+        self.set_duty_cycle(12)
 
-        if servo == "left":
-            self.pwm_servo_left.start(0)
-            time.sleep(1)
-            self.set_duty_cycle("left", 3)
-            time.sleep(1)
-            self.set_duty_cycle("left", 12)
-
-        if servo == "right":
-            self.pwm_servo_right.start(0)
-            time.sleep(1)
-            self.set_duty_cycle("right", 3)
-            time.sleep(1)
-            self.set_duty_cycle("right", 12)
-
-    def set_duty_cycle(self,servo, dutycycle):
-        if servo == "up": return self.pwm_servo_up.ChangeDutyCycle(dutycycle)
-        if servo == "left": return self.pwm_servo_left.ChangeDutyCycle(dutycycle)
-        if servo == "right": return self.pwm_servo_right.ChangeDutyCycle(dutycycle)
+    def set_duty_cycle(self, dutycycle):
+        return self.pwm_servo.ChangeDutyCycle(dutycycle)
+        # if servo == "left": return self.pwm_servo_left.ChangeDutyCycle(dutycycle)
+        # if servo == "right": return self.pwm_servo_right.ChangeDutyCycle(dutycycle)
 
 
-    def stop_one_servo(self, servo):
-        if servo == "up": self.pwm_servo_up.stop()
-        if servo == "left": self.pwm_servo_left.stop()
-        if servo == "right": self.pwm_servo_right.stop()
+    def stop_servo(self):
+        self.pwm_servo.stop()
+        # if servo == "left": self.pwm_servo_left.stop()
+        # if servo == "right": self.pwm_servo_right.stop()
 
-    def stop_servos(self):
-        # self.pwm.stop()
-        self.pwm_servo_up.stop()
-        self.pwm_servo_left.stop()
-        self.pwm_servo_right.stop()
+    
+        
 
     def start_feeding(self):
+        self.pwm_servo.start(0)
         self.is_running = True
-        self.start_servo("up")
-        self.stop_one_servo("up")
-        self.start_servo("left")
-        self.stop_one_servo("left")
-        self.start_servo("right")
-        self.stop_one_servo("right")
+        self.start_servo()
+        time.sleep(0.02)
+        # self.stop_servo()
         self.is_running = False
 
 
@@ -97,7 +71,8 @@ servo = Servo()
 # pwm.start(0)
 # pwm.start(80)
 try:
-    servo.start_feeding()
+    while True:
+        servo.start_feeding()
     # while True:
         # time.sleep(1)
         # pwm.ChangeDutyCycle(3)
@@ -118,6 +93,6 @@ except KeyboardInterrupt as e:
     print(e)
 
 finally:
-    servo.stop_servos()
+    servo.stop_servo()
     #pwm.stop()
     GPIO.cleanup()

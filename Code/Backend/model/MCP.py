@@ -1,6 +1,6 @@
 import spidev
-from model.LED import LED
-#from LED import LED
+# from model.LED import LED
+from LED import LED
 import time
 
 class MCP:
@@ -15,8 +15,8 @@ class MCP:
 
         self.led = led
 
-    def value_to_percentage(self, waarde):
-        return (waarde/1023.0) * 100
+    def convert_to_percentage(self, value_up, value_under):
+        return (100/value_under) * value_up
 
     def closespi(self):
         self.spi.close()
@@ -54,19 +54,21 @@ class MCP:
             # return format(self.value_to_percentage(result), '.2f')
             return result
 
-    def convert_to_percentage(self, value):
-        return(value/1023.0) * 100
+    # def convert_to_percentage(self, value):
+    #     return(value/1023.0) * 100
 
     def get_capacity(self):
         value_up = self.read_channel(0)
         value_under = self.read_channel(1)
         print(value_up)
         print(value_under)
-        print()
-        print(round(self.convert_to_percentage(value_up),2))
-        print(round(self.convert_to_percentage(value_under),2))
-        print()
-        print()
+        # print()
+        # print(round(self.convert_to_percentage(value_up, value_under)))
+        # print()
+        # print()
+        self.capacity_percentage =  round(self.convert_to_percentage(value_up, value_under))
+        self.run_leds(self.capacity_percentage)
+        return self.capacity_percentage
         # difference = value_up - value_under
         # #positief maken
         # difference = abs(difference)
@@ -79,38 +81,39 @@ class MCP:
         #     print("vol")
         #     self.led.led_on("green")
 
+    def run_leds(self, percentage):
+        # difference = value_up - value_under
+        # #positief maken
+        # difference = abs(difference)
+        # print(difference)
 
+        
+        if percentage >= 0 and percentage <= 5:
+            self.led.all_leds_off()
+            print("emtpy")
+            self.led.led_on("red")
+        elif percentage > 5 and percentage <= 20:
+            self.led.all_leds_off()
+            print("almost empty")
+            self.led.led_on("yellow")
+        elif percentage > 20 and percentage <= 100:
+            self.led.all_leds_off()
+            print("full")
+            self.led.led_on("green")
 
-        # 430 -> 100% (blijft altijd hetzelfde dus 100%)
-
-        # 693 -> 116%
-
-        # hoe meer licht, hoe lager waarde
-
-
-        # 1023-430=593
-        # 1023-693=330
         
 
-        # 593 -> 100%
-        # 330 -> 55.64%
+led = LED()
+mcp = MCP(led)
 
-        # 430/1023*100=42%
-        # 100-42= 58%
-
-        # 693/1023*100=67
-        # 100-67= 37%
-
-# led = LED()
-# mcp = MCP(led)
-
-# try:
-#     while True:
-#         mcp.get_capacity()
-#         time.sleep(1)
-# except KeyboardInterrupt as e:
-#     print(e)
-# finally:
-#     led.all_leds_off() 
+try:
+    while True:
+        print(mcp.get_capacity())
+        time.sleep(1)
+        print()
+except KeyboardInterrupt as e:
+    print(e)
+finally:
+    led.all_leds_off() 
 
 
