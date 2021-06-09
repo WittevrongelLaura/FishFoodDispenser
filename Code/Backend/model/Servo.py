@@ -31,9 +31,12 @@ class Servo:
         
         
         time.sleep(0.5)
-        self.set_duty_cycle(3)
+        self.set_duty_cycle(2)# rechts
         time.sleep(0.5)
-        self.set_duty_cycle(12)
+        self.set_duty_cycle(4)#links
+
+    def servo_90(self):
+        self.pwm_servo.ChangeDutyCycle(5)
 
     def set_duty_cycle(self, dutycycle):
         return self.pwm_servo.ChangeDutyCycle(dutycycle)
@@ -71,6 +74,8 @@ servo = Servo()
 # pwm.start(0)
 # pwm.start(80)
 try:
+    # servo.pwm_servo.start(0)
+    # servo.servo_90()
     while True:
         servo.start_feeding()
     # while True:

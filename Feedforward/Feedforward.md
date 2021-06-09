@@ -260,14 +260,37 @@ Vragen voor dit gesprek:
 - [x] vraag 2: Commando uitvoeren van de speaker met check_output werkt niet.
 
 
-
 Dit is de feedback op mijn vragen.
 
 - feedback 1: bij het opzoeken van de file en daarna het programma runnen lukt dit wel dus, eerst het commando runnen met check_output
+Daarna shell=True instellen in de check_output functie.
+- feedback 2: ook shell=True toevoegen
+
+
+Hier komt de feedforward: wat ga ik concreet doen?
+
+- [x] ToDo 1: commando eerst uitvoeren en shell=True instellen
+- [x] ToDo 2: shell=True toevoegen
+
+
+
+## Gesprek 13 (Datum: 9/06/2021)
+
+Lector: Dieter
+
+Vragen voor dit gesprek:
+
+- [x] vraag 1: Socketio foutmelding bij 2e keer laden pagina (TypeError: expected str, bytes or os.PathLike object, not _io.TextIOWrapper)
+- [x] vraag 2: De data van de database komt niet in de html
+
+
+Dit is de feedback op mijn vragen.
+
+- feedback 1: 
 - feedback 2: 
 
 
 Hier komt de feedforward: wat ga ik concreet doen?
 
 - [x] ToDo 1: 
-- [x] ToDo 2: 
+- [x] ToDo 2: -

@@ -13,12 +13,29 @@ class DataRepository:
     #########  Historiek/Dispenser  #########
     @staticmethod
     def read_all_history():
-        sql = "SELECT measuring_id, component_id, datetime, status, value, action_id FROM FishFooddispenser;"
+        sql = "SELECT measuring_id, component_id, datetime, status, value, action_id FROM FishFooddispenserDB.Dispenser;"
         return Database.get_rows(sql)
 
     @staticmethod
+    def read_all_history_by_value(value):
+        if value == "datetime":
+            sql = "SELECT datetime FROM FishFooddispenserDB.Dispenser WHERE component_id in(1, 2, 3);"
+        
+        if value == "capacity":
+            sql = "SELECT value FROM FishFooddispenserDB.Dispenser WHERE component_id = 3;"
+
+        if value == "watertemp":
+            sql = "SELECT value FROM FishFooddispenserDB.Dispenser WHERE component_id = 1;"
+
+        if value == "waterlevel":
+            sql = "SELECT value FROM FishFooddispenserDB.Dispenser WHERE component_id = 2;"
+        
+        return Database.get_rows(sql)
+
+
+    @staticmethod
     def read_hystory_by_id(measuring_id):
-        sql = "SELECT measuring_id, component_id, datetime, status, value, action_id FROM FishFooddispenser WHERE measuring_id = %s;"
+        sql = "SELECT measuring_id, component_id, datetime, status, value, action_id FROM FishFooddispenserDB.Dispenser WHERE measuring_id = %s;"
         params = [measuring_id]
         return Database.get_one_row(sql, params)
 
@@ -30,13 +47,13 @@ class DataRepository:
 
     @staticmethod
     def update_history(component_id, datetime, status, value, action_id):
-        sql = "UPDATE FishFooddispenser.Dispenser SET component_id = %s, datetime = %s, status = %s, value = %s, action_id = %s;"
+        sql = "UPDATE FishFooddispenserDB.Dispenser SET component_id = %s, datetime = %s, status = %s, value = %s, action_id = %s;"
         params = [component_id, datetime, status, value, action_id]
         return Database.execute_sql(sql, params)
 
     @staticmethod
     def delete_history(measuring_id):
-        sql = "DELETE FROM FishFooddispenser.Dispenser WHERE measuring_id = %s;"
+        sql = "DELETE FROM FishFooddispenserDB.Dispenser WHERE measuring_id = %s;"
         params = [measuring_id]
         return Database.execute_sql(sql, params)
 

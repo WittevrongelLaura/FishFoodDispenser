@@ -30,13 +30,12 @@ try:
     print("*** Program started ***")
     value_watertemp = watertemp.read_temp()
     print(value_watertemp)
-    # print(mcp.read_channel(0))
-    # print(mcp.read_channel(1))
+    
     #lcd.write_message("hello")
     
     # lcd.get_ipaddress()
 
-    
+
     
     ############socketio#######################
     @socketio.on('connect')
@@ -59,25 +58,33 @@ try:
     #     # DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  up)
     #     # DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  under)
 
+    @socketio.on('F2B_getCapacity')
+    def get_value_capacity(jsonObject):
+        value_capacity = mcp.get_capacity()
+        print(value_capacity)
+        emit("B2F_value_capacity", {"capacity":value_capacity}, broadcast=True)
+
     @socketio.on('F2B_getWaterTemp')
     def get_value_watertemp(jsonObject):
         value_watertemp = watertemp.read_temp()
         print(value_watertemp)
         emit("B2F_value_watertemp", {"temp":value_watertemp}, broadcast=True)
+        #watertemp.close_file()
 
     @socketio.on('F2B_getWaterlevel')
     def get_value_waterlevel(jsonObject):
         value_waterlevel = waterlevel.read_waterlevel()
         print(value_waterlevel)
-        emit("B2F_value_watertemp", {"temp":value_waterlevel}, broadcast=True)
+        emit("B2F_value_waterlevel", {"level":value_waterlevel}, broadcast=True)
 
-          
+    @socketio.on('F2B_getData')
+    def get_data_from_db(jsonObject):
+        print(jsonObject)
+        capacity = DataRepository.read_all_history_by_value("capacity")
+        watertemp = DataRepository.read_all_history_by_value("watertemp")
+        waterlevel = DataRepository.read_all_history_by_value("waterlevel")
+        emit("B2F_DataDb", {"capacity": capacity, "watertemp": watertemp, "waterlevel": waterlevel})
 
-        
-
-    # @socketio.on('F2B_getCapacity')
-    # def get_value_capacity(jsonObject):
-    #     value_capacity = mcp.get_capacity()
 
     def add_to_Database():
         if watertemp.read_temp() > 0 :
@@ -98,6 +105,6 @@ except KeyboardInterrupt as e:
 
 finally:
     mcp.closespi()
-    # waterlevel.close_waterlevel()
+    waterlevel.close_waterlevel()
     watertemp.close_file()
     GPIO.cleanup()

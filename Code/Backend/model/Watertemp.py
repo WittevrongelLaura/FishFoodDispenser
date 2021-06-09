@@ -7,7 +7,7 @@ class Watertemp:
         check_output("ls /sys/bus/w1/devices", shell=True)
 
     def read_temp(self):
-        self.sensor_file = open(self.sensor_file, 'r')
+        self.sensor_file = open("/sys/bus/w1/devices/28-3c01d075c50e/w1_slave", 'r')
 
         for line in self.sensor_file:
 
@@ -19,11 +19,11 @@ class Watertemp:
     def close_file(self):
         self.sensor_file.close()
 
-temp = Watertemp()
-try:
-    print(temp.read_temp())
+# temp = Watertemp()
+# try:
+#     print(temp.read_temp())
             
-except KeyboardInterrupt as e:
-    print(e)
-finally:
-    temp.close_file()
+# except KeyboardInterrupt as e:
+#     print(e)
+# finally:
+#     temp.close_file()
