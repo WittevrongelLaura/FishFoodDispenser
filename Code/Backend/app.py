@@ -1,5 +1,7 @@
+from logging import captureWarnings
 from RPi import GPIO
 import time
+from datetime import datetime
 
 
 from flask import Flask, json, jsonify, request
@@ -13,12 +15,14 @@ from model.WaterLevel import Waterlevel
 from model.Watertemp import Watertemp
 from model.LCD import LCD
 from model.LED import LED
+from model.Servo import Servo
 
 led = LED()
 mcp = MCP(led)
 waterlevel = Waterlevel()
 watertemp = Watertemp()
 lcd = LCD()
+servo = Servo()
 #print(datetime.now())
 
 try:
@@ -28,13 +32,15 @@ try:
     socketio = SocketIO(app, cors_allowed_origins="*")
     CORS(app)  
     print("*** Program started ***")
-    value_watertemp = watertemp.read_temp()
-    print(value_watertemp)
+    # value_watertemp = watertemp.read_temp()
+    # print(value_watertemp)
     
     #lcd.write_message("hello")
     
-    # lcd.get_ipaddress()
-
+    lcd.get_ipaddress()
+    #current time
+    time_now = datetime.now().strftime("%H:%M:%S")
+    print("Current time", time_now)
 
     
     ############socketio#######################
@@ -69,7 +75,7 @@ try:
         value_watertemp = watertemp.read_temp()
         print(value_watertemp)
         emit("B2F_value_watertemp", {"temp":value_watertemp}, broadcast=True)
-        #watertemp.close_file()
+        
 
     @socketio.on('F2B_getWaterlevel')
     def get_value_waterlevel(jsonObject):
@@ -80,21 +86,60 @@ try:
     @socketio.on('F2B_getData')
     def get_data_from_db(jsonObject):
         print(jsonObject)
-        capacity = DataRepository.read_all_history_by_value("capacity")
-        watertemp = DataRepository.read_all_history_by_value("watertemp")
-        waterlevel = DataRepository.read_all_history_by_value("waterlevel")
+        # capacity = DataRepository.read_all_history_by_value("capacity")
+        # watertemp = DataRepository.read_all_history_by_value("watertemp")
+        # waterlevel = DataRepository.read_all_history_by_value("waterlevel")
+        capacity = DataRepository.read_value_by_id(3)
+        watertemp = DataRepository.read_value_by_id(1)
+        waterlevel = DataRepository.read_value_by_id(2)
         emit("B2F_DataDb", {"capacity": capacity, "watertemp": watertemp, "waterlevel": waterlevel})
-
-
-    def add_to_Database():
-        if watertemp.read_temp() > 0 :
+    
+    def add_to_db():
+        value_watertemp = watertemp.read_temp()
+        status = None
+        if float(value_watertemp) > 0:
             status = 1
         else:
             status = 0
-        DataRepository.create_history(1, None, status, watertemp.read_temp(), 1)
+        DataRepository.create_value(1, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), status, value_watertemp, 1)
 
-    
-    
+        value_waterlevel = waterlevel.read_waterlevel()
+        status = None
+        if value_waterlevel > 0:
+            status = 1
+        else:
+            status = 0
+        DataRepository.create_value(2, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), status, value_waterlevel, 2)
+
+        value_capacity = mcp.get_capacity()
+        status = None
+        if value_capacity > 0:
+            status = 1
+        else:
+            status = 0
+        DataRepository.create_value(3, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), status, value_capacity, 3)
+
+    def start_process():
+        #### het proces manueel starten (ook met de button op index.html) ###
+
+        #lcd geeft message: "starting process"
+        lcd.write_message("Process started")
+
+        #aantal gram ingesteld ophalen
+
+
+        #servo start met ingestelde grammen
+        servo.start_servo()
+
+        #lcd terug naar standby modus (ip-adres tonen)
+
+        
+
+
+    #if time_now == lcd.setted_time()
+        #start_process()
+        #add_to_db()
+        
 
     if __name__ == "__main__":
         #app.run(debug=True)

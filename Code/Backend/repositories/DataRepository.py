@@ -34,25 +34,25 @@ class DataRepository:
 
 
     @staticmethod
-    def read_hystory_by_id(measuring_id):
+    def read_value_by_id(measuring_id):
         sql = "SELECT measuring_id, component_id, datetime, status, value, action_id FROM FishFooddispenserDB.Dispenser WHERE measuring_id = %s;"
         params = [measuring_id]
         return Database.get_one_row(sql, params)
 
     @staticmethod
-    def create_history(component_id, datetime, status, value, action_id):
+    def create_value(component_id, datetime, status, value, action_id):
         sql = "INSERT INTO FishFooddispenserDB.Dispenser(component_id, datetime, status, value, action_id) VALUES(%s,%s,%s,%s,%s);"
         params = [component_id, datetime, status, value, action_id]
         return Database.execute_sql(sql, params)
 
     @staticmethod
-    def update_history(component_id, datetime, status, value, action_id):
+    def update_value(component_id, datetime, status, value, action_id):
         sql = "UPDATE FishFooddispenserDB.Dispenser SET component_id = %s, datetime = %s, status = %s, value = %s, action_id = %s;"
         params = [component_id, datetime, status, value, action_id]
         return Database.execute_sql(sql, params)
 
     @staticmethod
-    def delete_history(measuring_id):
+    def delete_value(measuring_id):
         sql = "DELETE FROM FishFooddispenserDB.Dispenser WHERE measuring_id = %s;"
         params = [measuring_id]
         return Database.execute_sql(sql, params)

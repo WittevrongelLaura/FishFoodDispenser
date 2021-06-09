@@ -52,6 +52,7 @@ class Button:
         if self.status == 8:
             self.status = 1
         
+        self.lcd.write_message(str(self.status))
         print(self.status)
         
     
@@ -71,6 +72,7 @@ class Button:
         if self.status == 0:
             self.status = 7
         
+        self.lcd.write_message(str(self.status))
         print(self.status)
         
 

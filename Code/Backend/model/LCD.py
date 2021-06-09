@@ -98,4 +98,3 @@ class LCD:
 #     print(e)
 # # finally:
 #     #lcd.clear_display()
-    
