@@ -1,7 +1,7 @@
 from RPi import GPIO
 import time
-from model.Shiftregister import Shiftregister
-#from Shiftregister import Shiftregister
+#from model.Shiftregister import Shiftregister
+from Shiftregister import Shiftregister
 from subprocess import check_output
 
 class LCD:
@@ -28,6 +28,7 @@ class LCD:
     def send_instruction(self, value):
         #RS moet laag staan voor instruction
         GPIO.output(self.RS, GPIO.LOW)
+        GPIO.output(self.E, GPIO.HIGH)
         self.set_data_bits(value)
         GPIO.output(self.E, GPIO.LOW)
         GPIO.output(self.E, GPIO.HIGH)#op high zetten om te beginnen lezen
@@ -50,6 +51,12 @@ class LCD:
 
         for char in message[16:]:
             self.send_character(ord(char))
+
+    def read_display(self):
+        pass
+
+    def set_status(self, status):
+        pass
 
     def clear_display(self):
         self.send_instruction(0x01)
@@ -81,20 +88,25 @@ class LCD:
 
     
 
-# try:
-#     lcd = LCD()
+try:
+    lcd = LCD()
    
-#     #send_character(ord("A"))
-#     # text = "HALLO Laura"
-#     # for char in text:
-#     #     send_character(ord(char))
-#     #send_character(65)#letter A schrijven
-#     #lcd.write_message('Hellooooohelloooooooooj')
-
-#     message = input("What do you want to display? > ")
-#     lcd.write_message(message)
+    #lcd.send_character(ord("F"))
     
-# except KeyboardInterrupt as e:
-#     print(e)
-# # finally:
-#     #lcd.clear_display()
+    # text = "HALLO Laura"
+    # for char in text:
+    #     send_character(ord(char))
+    #send_character(65)#letter A schrijven
+    
+    #lcd.write_message('Hello')
+
+    lcd.get_ipaddress()
+    time.sleep(1)
+
+    # message = input("What do you want to display? > ")
+    # lcd.write_message(message)
+    
+except KeyboardInterrupt as e:
+    print(e)
+# finally:
+    #lcd.clear_display()

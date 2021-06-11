@@ -10,6 +10,8 @@ let htmlFotodiodeBoven, htmlFotodiodeOnder, htmlBtnCreateValues, htmlToggleNav, 
 let htmlCapacity, htmlTemp, htmlWaterlevel, htmlInfoMessage;
 let htmlBar, htmlBars;
 let htmlTable, htmlTableDatetime, htmlTableCapacity, htmlTableLevelTemp;
+
+let value_watertemp, value_waterlevel, value_capacity;
 //#endregion
 
 //#region ***  Callback-Visualisation - show___ ***
@@ -25,6 +27,15 @@ const listenToClickFeedManually = function(){
     htmlBtnFeedManually.addEventListener('click', function(){
         console.log("Feed manually")
         //document.querySelector("body").classList.toggle("c-modal");
+        socket.emit('F2B_startProcess')
+
+        console.log("values: ")
+        console.log(value_watertemp)
+        console.log(value_waterlevel)
+        console.log(value_capacity)
+               
+        //toevoegen aan db
+        socket.emit("F2B_addToDb", {"watertemp" : value_watertemp, "waterlevel": value_waterlevel, "capacity": value_capacity});
     })
 }
 //#endregion
@@ -56,11 +67,13 @@ const listenToUI = function(){
 
         //waterlevel opvragen
         socket.emit("F2B_getWaterlevel", "get waterlevel");
+        
+        
     }
 
     if (htmlData){
         //data in database opvragen
-        socket.emit("F2B_getData", "get data");
+        socket.emit("F2B_getDataFromDb", "get data");
     }
     
 
@@ -102,38 +115,38 @@ const listenToSocket = function(){
     if (htmlHome){
         socket.on('B2F_value_capacity', function(jsonObject){
             console.log(jsonObject.capacity)
-            let capacity = jsonObject.capacity
-            let html = `${capacity}%`;
+            value_capacity = jsonObject.capacity
+            let html = `${value_capacity}%`;
             htmlCapacity.innerHTML = html;
 
             // for(const bar of htmlBars){
             //     console.log(bar)
             // }
 
-            if (capacity > 0 && capacity <= 10){
+            if (value_capacity > 0 && value_capacity <= 10){
                 console.log("container empty");
                 htmlBars[9].classList.add('c-status-bar--empty');
                 htmlInfoMessage.innerHTML = `The container is almost empty!`;
 
-            } else if (capacity > 0 && capacity <= 20){
+            } else if (value_capacity > 0 && value_capacity <= 20){
                 htmlBars[9].classList.add('c-status-bar--empty');
                 htmlBars[8].classList.add('c-status-bar--empty');
                 htmlInfoMessage.innerHTML = `The container is almost empty!`;
                 
-            } else if (capacity > 0 && capacity <= 30){
+            } else if (value_capacity > 0 && value_capacity <= 30){
                 htmlBars[9].classList.add('c-status-bar--almost-empty');
                 htmlBars[8].classList.add('c-status-bar--almost-empty');
                 htmlBars[7].classList.add('c-status-bar--almost-empty');
                 htmlInfoMessage.innerHTML = `The container is half empty`;
                 
-            } else if (capacity > 0 && capacity <= 40){
+            } else if (value_capacity > 0 && value_capacity <= 40){
                 htmlBars[9].classList.add('c-status-bar--almost-empty');
                 htmlBars[8].classList.add('c-status-bar--almost-empty');
                 htmlBars[7].classList.add('c-status-bar--almost-empty');
                 htmlBars[6].classList.add('c-status-bar--almost-empty');
                 htmlInfoMessage.innerHTML = `The container is half empty`;
                 
-            } else if (capacity > 0 && capacity <= 50){
+            } else if (value_capacity > 0 && value_capacity <= 50){
                 htmlBars[9].classList.add('c-status-bar--almost-empty');
                 htmlBars[8].classList.add('c-status-bar--almost-empty');
                 htmlBars[7].classList.add('c-status-bar--almost-empty');
@@ -141,7 +154,7 @@ const listenToSocket = function(){
                 htmlBars[5].classList.add('c-status-bar--almost-empty');
                 htmlInfoMessage.innerHTML = `The container is half empty`;
                 
-            } else if (capacity > 50 && capacity <= 60){
+            } else if (value_capacity > 50 && value_capacity <= 60){
                 htmlBars[9].classList.add('c-status-bar--full');
                 htmlBars[8].classList.add('c-status-bar--full');
                 htmlBars[7].classList.add('c-status-bar--full');
@@ -150,7 +163,7 @@ const listenToSocket = function(){
                 htmlBars[4].classList.add('c-status-bar--full');
                 htmlInfoMessage.innerHTML = `The container is full`;
                 
-            } else if (capacity > 50 && capacity <= 70){
+            } else if (value_capacity > 50 && value_capacity <= 70){
                 htmlBars[9].classList.add('c-status-bar--full');
                 htmlBars[8].classList.add('c-status-bar--full');
                 htmlBars[7].classList.add('c-status-bar--full');
@@ -160,7 +173,7 @@ const listenToSocket = function(){
                 htmlBars[3].classList.add('c-status-bar--full');
                 htmlInfoMessage.innerHTML = `The container is full`;
                 
-            } else if (capacity > 50 && capacity <= 80){
+            } else if (value_capacity > 50 && value_capacity <= 80){
                 htmlBars[9].classList.add('c-status-bar--full');
                 htmlBars[8].classList.add('c-status-bar--full');
                 htmlBars[7].classList.add('c-status-bar--full');
@@ -171,7 +184,7 @@ const listenToSocket = function(){
                 htmlBars[2].classList.add('c-status-bar--full');
                 htmlInfoMessage.innerHTML = `The container is full`;
                 
-            } else if (capacity > 50 && capacity <= 90){
+            } else if (value_capacity > 50 && value_capacity <= 90){
                 htmlBars[9].classList.add('c-status-bar--full');
                 htmlBars[8].classList.add('c-status-bar--full');
                 htmlBars[7].classList.add('c-status-bar--full');
@@ -183,7 +196,7 @@ const listenToSocket = function(){
                 htmlBars[1].classList.add('c-status-bar--full');
                 htmlInfoMessage.innerHTML = `The container is full`;
                 
-            } else if (capacity > 50 && capacity <= 100){
+            } else if (value_capacity > 50 && value_capacity <= 100){
                 for (let bar of htmlBars){
                     bar.classList.add('c-status-bar--full');
                 }
@@ -193,17 +206,24 @@ const listenToSocket = function(){
         })
 
         socket.on('B2F_value_watertemp', function(jsonObject){
-            console.log(jsonObject.temp)
-            let html = `${jsonObject.temp}°C`;
+            value_watertemp = jsonObject.temp
+            console.log(value_watertemp)
+            let html = `${value_watertemp}°C`;
             htmlTemp.innerHTML = html;
+
+            
         })
         
         socket.on('B2F_value_waterlevel', function(jsonObject){
-            console.log(jsonObject.level)
-            let html = `${jsonObject.level}%`;
+            value_waterlevel = jsonObject.level
+            console.log(value_waterlevel)
+            let html = `${value_waterlevel}%`;
             htmlWaterlevel.innerHTML = html;
         })
-    }
+
+        
+     
+    }    
 
     if (htmlData){
         socket.on('B2F_DataDb', function(jsonObject){

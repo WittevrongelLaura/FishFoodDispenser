@@ -281,16 +281,39 @@ Lector: Dieter
 Vragen voor dit gesprek:
 
 - [x] vraag 1: Socketio foutmelding bij 2e keer laden pagina (TypeError: expected str, bytes or os.PathLike object, not _io.TextIOWrapper)
-- [x] vraag 2: De data van de database komt niet in de html
+- [x] vraag 2: Op welke manier 3 rows uit de db halen met dezelfde datum
 
 
 Dit is de feedback op mijn vragen.
 
-- feedback 1: 
-- feedback 2: 
+- feedback 1: bestand wordt niet geopend bij het 2e keer laden van de pagina (init staat boven en wordt maar 1 keer uitgevoerd)
+- feedback 2: sorteren op datetime descending
+
+
+Hier komt de feedforward: wat ga ik concreet doen?
+
+- [x] ToDo 1: pad van het bestand meegeven in de functie die wordt opgeroepen in de main (app.py)
+- [x] ToDo 2: query maken met datetime in de eerste kolom, value en dan 1 van de eerste 3 component_id's (id 1,2,3 zijn sensoren)
+
+
+## Gesprek 8 (Datum: 10/06/2021)
+
+TOERMOMENT 3
+Lectoren: Claudia, Geert
+
+Vragen voor dit gesprek:
+
+- [x] vraag 1: / (geen vragen gesteld)
+
+Dit is de feedback op mijn MVP.
+
+- feedback 1: home-page -> data duidelijker maken met een titel te geven aan iedere waarde
+- feedback 2: settings -> enkel speaker aan-/afleggen
+- feedback 3: algemene design van de website moet beter, meer witruimte
+- feedback 4: data live weergeven
 
 
 Hier komt de feedforward: wat ga ik concreet doen?
 
 - [x] ToDo 1: 
-- [x] ToDo 2: -
+

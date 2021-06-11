@@ -2,7 +2,7 @@ import time
 from RPi import GPIO
 
 class Shiftregister:
-    def __init__(self, ds_pin=5, shcp_pin=19, stcp_pin=13, mr_pin=26, oe_pin=6):
+    def __init__(self, ds_pin=5, shcp_pin=13, stcp_pin=22, mr_pin=26, oe_pin=6):
         self.ds_pin = ds_pin # serial data
         self.shcp_pin = shcp_pin # shift register clock pulse
         self.stcp_pin = stcp_pin # storage register clock pulse
@@ -26,7 +26,7 @@ class Shiftregister:
         time.sleep(self.delay)
         GPIO.output(self.shcp_pin, GPIO.HIGH)
         time.sleep(self.delay)
-        GPIO.output(self.ds_pin, GPIO.LOW)
+        #GPIO.output(self.ds_pin, GPIO.LOW)
         GPIO.output(self.shcp_pin, GPIO.LOW)
         time.sleep(self.delay)
       

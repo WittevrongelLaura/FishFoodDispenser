@@ -91,17 +91,13 @@
                   <div class="o-layout">
                       <form>
                         <label class="o-layout__item" for="amounts_gram">Number of grams for 1 time feeding:</label>
-                        <input class="o-layout__item" type="text" name="amounts_gram" id="amounts_gram" value="10" min="1" /><br />
+                        <input class="o-layout__item" type="text" name="amounts_gram" id="amounts_gram" value="10" min="1" /><br><br>
                         <label class="o-layout__item" for="time_of_day">What time of the day?</label>
-                        <input class="o-layout__item" type="time" name="time_of_day" id="time_of_day" value="19:00" /><br>
-                        <label class="o-layout__item" for="activate_sensors">Activate sensors:</label><br>
-                        <input class="o-layout__item" type="checkbox" value="watertemp" name="watertemp" id="watertemp">
-                        <label class="o-layout__item" for="watertemp" >Watertemperature</label><br>
-                        <input class="o-layout__item" type="checkbox" value="waterlevel" name="waterlevel" id="waterlevel">
-                        <label class="o-layout__item" for="waterlevel" >Waterlevel</label><br>
-                        <input class="o-layout__item" type="checkbox" value="speaker" name="speaker" id="speaker">
-                        <label class="o-layout__item" for="speaker" >Speaker</label><br>
-                        <button class="c-btn-cta c-btn-cta--link" type="submit">Save</button>
+                        <input class="o-layout__item" type="time" name="time_of_day" id="time_of_day" value="19:00" /><br><br>
+                        <label class="o-layout__item" for="activate_sensors">Activate/deactivate speaker:</label><br>
+                        <input class="o-layout__item" type="checkbox" value="speaker" name="speaker" id="speaker" checked>
+                        <label class="o-layout__item" for="speaker">On</label><br>
+                        <button class="c-btn-cta c-btn-cta--link c-btn-cta--save o-layout__item o-layout--justify-center" type="submit">Save</button>
                       </form>
                   </div>
               </div>

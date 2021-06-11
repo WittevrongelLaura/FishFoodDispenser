@@ -132,14 +132,14 @@ class Button:
 
 
 
-try:
-    btn = Button()
+# try:
+#     btn = Button()
     
-    while True:
-        time.sleep(0.5)
+#     while True:
+#         time.sleep(0.5)
 
-except KeyboardInterrupt as e:
-    print(e)
+# except KeyboardInterrupt as e:
+#     print(e)
 
-finally:
-    GPIO.cleanup()
+# finally:
+#     GPIO.cleanup()

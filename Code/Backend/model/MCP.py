@@ -1,6 +1,6 @@
 import spidev
-from model.LED import LED
-#from LED import LED
+#from model.LED import LED
+from LED import LED
 import time
 
 class MCP:
@@ -103,17 +103,18 @@ class MCP:
 
         
 
-# led = LED()
-# mcp = MCP(led)
+led = LED()
+mcp = MCP(led)
 
-# try:
-#     while True:
-#         print(mcp.get_capacity())
-#         time.sleep(1)
-#         print()
-# except KeyboardInterrupt as e:
-#     print(e)
-# finally:
-#     led.all_leds_off() 
+try:
+    print(mcp.read_channel(0))
+    # while True:
+    #     print(mcp.get_capacity())
+    #     time.sleep(1)
+    #     print()
+except KeyboardInterrupt as e:
+    print(e)
+finally:
+    led.all_leds_off() 
 
 
