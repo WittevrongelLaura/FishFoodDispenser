@@ -26,6 +26,9 @@ lcd = LCD()
 servo = Servo()
 speaker = Speaker()
 #print(datetime.now())
+last_value_capacity = None
+last_value_temp = None
+last_value_level = None
 
 try:
     # Start app
@@ -69,29 +72,40 @@ try:
     @socketio.on('F2B_getCapacity')
     def get_value_capacity(jsonObject):
         global last_value_capacity
-        value_capacity = mcp.get_capacity()
-        print(value_capacity)
-
         while True:
-            if value_capacity != last_value_capacity():
+            value_capacity = mcp.get_capacity()
+            print(value_capacity)
+            if value_capacity != last_value_capacity:
                 emit("B2F_value_capacity", {"capacity":value_capacity}, broadcast=True)
-
+                time.sleep(0.25)
             last_value_capacity = value_capacity
 
     @socketio.on('F2B_getWaterTemp')
     def get_value_watertemp(jsonObject):
-        #while True:
-        value_watertemp = watertemp.read_temp()
-        print(value_watertemp)
-        emit("B2F_value_watertemp", {"temp":value_watertemp}, broadcast=True)
-        
+        global last_value_temp
+        while True:
+            value_watertemp = watertemp.read_temp()
+            print(value_watertemp, "%")
+            if value_watertemp != last_value_temp:
+                print('verschillend')
+                emit("B2F_value_watertemp", value_watertemp)
+                time.sleep(0.25)
+            else:
+                print('hetzelfde')
+                time.sleep(0.25)
+            last_value_temp = value_watertemp
 
     @socketio.on('F2B_getWaterlevel')
     def get_value_waterlevel(jsonObject):
-        #while True:
-        value_waterlevel = waterlevel.read_waterlevel()
-        print(value_waterlevel)
-        emit("B2F_value_waterlevel", {"level":value_waterlevel}, broadcast=True)
+        global last_value_level
+        
+        while True:
+            value_waterlevel = waterlevel.read_waterlevel()
+            print(value_waterlevel)
+            emit("B2F_value_waterlevel", {"level":value_waterlevel}, broadcast=True)
+            time.sleep(0.25)
+        
+            last_value_level = value_waterlevel
    
 
     @socketio.on('F2B_addToDb')
@@ -152,20 +166,21 @@ try:
     def start_process():
         #### het proces manueel starten (ook met de button op index.html) ###
 
-        #speaker maakt geluid
-        speaker.getSound()
+        # #speaker maakt geluid
+        # speaker.getSound()
 
-        #lcd geeft message: "starting process"
-        lcd.write_message("Process started")
+        # #lcd geeft message: "starting process"
+        # lcd.write_message("Process started")
 
-        #aantal gram ingesteld ophalen
-        #lcd.read_display()
+        # #aantal gram ingesteld ophalen
+        # #lcd.read_display()
 
-        #servo start met ingestelde grammen
-        servo.start_servo(5)
+        # #servo start met ingestelde grammen
+        # servo.start_servo(5)
 
         #lcd terug naar standby modus (ip-adres tonen)
         #lcd.setStatus(1)
+        pass
         
 
 

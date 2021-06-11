@@ -90,13 +90,14 @@ const listenToUI = function(){
 
 
 const listenToSocket = function(){
+        
     socket.on('connect', function(){
         console.log('Verbonden met socket webserver'); 
     })
 
-    socket.on('B2F_connection', function(jsonObject){
-        console.log(jsonObject)
-    })
+    // socket.on('B2F_connection', function(jsonObject){
+    //     console.log(jsonObject)
+    // })
 
     // socket.on('B2F_getValuesPhotodiodes', function(jsonObject){
     //     console.log(jsonObject[0])
@@ -206,12 +207,11 @@ const listenToSocket = function(){
         })
 
         socket.on('B2F_value_watertemp', function(jsonObject){
-            value_watertemp = jsonObject.temp
-            console.log(value_watertemp)
-            let html = `${value_watertemp}°C`;
+            console.log(jsonObject);
+            //value_watertemp = jsonObject.temp;
+            //console.log(value_watertemp);
+            let html = `${jsonObject}°C`;
             htmlTemp.innerHTML = html;
-
-            
         })
         
         socket.on('B2F_value_waterlevel', function(jsonObject){

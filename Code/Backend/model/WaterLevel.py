@@ -70,14 +70,14 @@ class Waterlevel:
         self.i2c.close()
 
 
-try:
-    waterlevel = Waterlevel()
-    while True:
+# try:
+#     waterlevel = Waterlevel()
+#     while True:
         
-        print(waterlevel.read_waterlevel())
-        time.sleep(1)
+#         print(waterlevel.read_waterlevel())
+#         time.sleep(1)
 
-except KeyboardInterrupt as e:
-    print(e)
-finally:
-    waterlevel.close_waterlevel()
+# except KeyboardInterrupt as e:
+#     print(e)
+# finally:
+#     waterlevel.close_waterlevel()

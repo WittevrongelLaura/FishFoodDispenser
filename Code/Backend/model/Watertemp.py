@@ -14,16 +14,17 @@ class Watertemp:
             if line.find('t') > 0:
                 temperatuur = int(line[line.find('t')+2:])/1000
             
-        return format(temperatuur, '.2f')
+        return round(temperatuur)
 
     def close_file(self):
         self.sensor_file.close()
 
-temp = Watertemp()
-try:
-    print(temp.read_temp())
+# temp = Watertemp()
+# try:
+#     while True:
+#         print(temp.read_temp())
             
-except KeyboardInterrupt as e:
-    print(e)
-finally:
-    temp.close_file()
+# except KeyboardInterrupt as e:
+#     print(e)
+# finally:
+#     temp.close_file()

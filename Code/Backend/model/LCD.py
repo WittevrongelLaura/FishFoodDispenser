@@ -1,7 +1,7 @@
 from RPi import GPIO
 import time
-#from model.Shiftregister import Shiftregister
-from Shiftregister import Shiftregister
+from model.Shiftregister import Shiftregister
+#from Shiftregister import Shiftregister
 from subprocess import check_output
 
 class LCD:
@@ -66,8 +66,9 @@ class LCD:
         #ip-adres teruggeven
         ips = check_output(['hostname', '--all-ip-addresses']).split()
         #wordt encoded bytes teruggestuurd dus decoderen
-        print(ips[0].decode())
-        self.write_message(ips[0].decode())
+        # print(ips[0].decode())
+        # self.write_message(ips[0].decode())
+        self.write_message("IP-address:")
 
         if len(ips) > 1:
             #als er meerdere ip-adressen worden gereturnt
