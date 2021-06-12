@@ -5,11 +5,12 @@ const socket = io(lanIP);
 
 //#region ***  DOM references ***
 let htmlHeader;
-let htmlHome, htmlData, htmlSettings, htmlAbout, htmlUserManuals;
+let htmlHome, htmlAnalysis, htmlSettings, htmlAbout, htmlUserManuals;
 let htmlFotodiodeBoven, htmlFotodiodeOnder, htmlBtnCreateValues, htmlToggleNav, htmlBtnFeedManually;
 let htmlCapacity, htmlTemp, htmlWaterlevel, htmlInfoMessage;
 let htmlBar, htmlBars;
 let htmlTable, htmlTableDatetime, htmlTableCapacity, htmlTableLevelTemp;
+let htmlBtnSave, htmlGrams, htmlTime, htmlStateSpeaker;
 
 let value_watertemp, value_waterlevel, value_capacity;
 //#endregion
@@ -30,12 +31,42 @@ const listenToClickFeedManually = function(){
         socket.emit('F2B_startProcess')
 
         console.log("values: ")
-        console.log(value_watertemp)
-        console.log(value_waterlevel)
-        console.log(value_capacity)
+        console.log("watertemp: ", value_watertemp)
+        console.log("waterlevel: ", value_waterlevel)
+        console.log("capacity: ", value_capacity)
                
         //toevoegen aan db
         socket.emit("F2B_addToDb", {"watertemp" : value_watertemp, "waterlevel": value_waterlevel, "capacity": value_capacity});
+    })
+}
+
+const listenToClickSave = function(){
+    //als de pagina geladen is
+    let previousGrams = htmlGrams.value
+    let previousTime = htmlTime.value
+    let previousStateSpeaker = htmlStateSpeaker.checked
+    console.log(previousGrams)
+    console.log(previousTime)
+    console.log(previousStateSpeaker)
+
+    htmlBtnSave.addEventListener('click', function(){
+        console.log('save');
+        let grams = htmlGrams.value;
+        let time = htmlTime.value;
+        let stateSpeaker = htmlStateSpeaker.checked;
+        console.log(grams);
+        console.log(time);
+        console.log(stateSpeaker);
+
+        if (previousGrams != grams){
+            socket.emit("F2B_grams", grams);
+        }
+        if (previousTime != time){
+            socket.emit("F2B_time", time);
+        }
+        if (previousStateSpeaker != stateSpeaker){
+            socket.emit("F2B_stateSpeaker", stateSpeaker)
+        }
     })
 }
 //#endregion
@@ -71,7 +102,7 @@ const listenToUI = function(){
         
     }
 
-    if (htmlData){
+    if (htmlAnalysis){
         //data in database opvragen
         socket.emit("F2B_getDataFromDb", "get data");
     }
@@ -307,8 +338,8 @@ const listenToSocket = function(){
 
         socket.on('B2F_value_watertemp', function(jsonObject){
             console.log(jsonObject);
-            //value_watertemp = jsonObject.temp;
-            //console.log(value_watertemp);
+            value_watertemp = jsonObject;
+            console.log(value_watertemp);
             let html = `${jsonObject}°C`;
             htmlTemp.innerHTML = html;
         })
@@ -324,20 +355,22 @@ const listenToSocket = function(){
      
     }    
 
-    if (htmlData){
-        socket.on('B2F_DataDb', function(jsonObject){
-            console.log(jsonObject.capacity);
-            console.log(jsonObject.watertemp);
-            console.log(jsonObject.waterlevel);
+    if (htmlAnalysis){
+        socket.on('B2F_DataFromDb', function(jsonObject){
+            // console.log(jsonObject.capacity);
+            // console.log(jsonObject.watertemp);
+            // console.log(jsonObject.waterlevel);
             
-            let html = '';
-            for (let row of htmlTable){
-                html += `<td class="c-table__item js-table-datetime">25/05/21<br>19:00</td>
-                <td class="c-table__item js-table-capacity">${jsonObject.capacity}%</td>
-                <td class="c-table__item js-table-level-temp">${jsonObject.waterlevel}%<br>${jsonObject.watertemp}°C</td>`;
-            }
+            // let html = '';
+            // for (let row of htmlTable){
+            //     html += `<td class="c-table__item js-table-datetime">25/05/21<br>19:00</td>
+            //     <td class="c-table__item js-table-capacity">${jsonObject.capacity}%</td>
+            //     <td class="c-table__item js-table-level-temp">${jsonObject.waterlevel}%<br>${jsonObject.watertemp}°C</td>`;
+            // }
 
-            htmlTable.innerHTML = html;
+            // htmlTable.innerHTML = html;
+            console.log("Frontend")
+            console.log(jsonObject);
         })
     }
     
@@ -365,7 +398,7 @@ const init = function () {
     htmlToggleNav = document.querySelectorAll(".js-toggle-nav");
 
     htmlHome = document.querySelector('.js-home');
-    htmlData = document.querySelector('.js-data');
+    htmlAnalysis = document.querySelector('.js-data');
     htmlSettings = document.querySelector('.js-settings');
     htmlAbout = document.querySelector('.js-about');
     htmlUserManuals = document.querySelector('.js-usermanuals');
@@ -375,6 +408,10 @@ const init = function () {
     htmlWaterlevel = document.querySelector('.js-waterlevel');
     htmlInfoMessage = document.querySelector('.js-status-message')
     htmlBtnFeedManually = document.querySelector('.js-btn-feedmanually');
+    htmlBtnSave = document.querySelector('.js-btn-save');
+    htmlGrams = document.querySelector('.js-grams');
+    htmlTime = document.querySelector('.js-time');
+    htmlStateSpeaker = document.querySelector('.js-state-speaker')
 
     htmlBar = document.querySelector('.js-status-bar');
     htmlBars = document.querySelectorAll('.js-bar');
@@ -397,6 +434,11 @@ const init = function () {
     //     console.log("on data page")
     //     getDataFromDb()
     // }
+
+    if (htmlSettings){
+        console.log("on settings page")
+        listenToClickSave();
+    }
 
 };
 //#endregion

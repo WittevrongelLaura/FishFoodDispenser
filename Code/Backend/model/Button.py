@@ -1,7 +1,7 @@
 from RPi import GPIO
 import time
-#from model.LCD import LCD
-from LCD import LCD
+from model.LCD import LCD
+#from LCD import LCD
 # from Watertemp  import Watertemp
 # from WaterLevel import Waterlevel
 # from MCP import MCP
@@ -133,15 +133,15 @@ class Button:
                 self.lcd.write_message(speaker)
         print()
             
-try:
-    btn = Button(str(80),str(20), str(95), "on")
+# try:
+#     btn = Button(str(80),str(20), str(95), "on")
     
-    while True:
-        time.sleep(0.5)
+#     while True:
+#         time.sleep(0.5)
 
-except KeyboardInterrupt as e:
-    print(e)
+# except KeyboardInterrupt as e:
+#     print(e)
 
-finally:
-    btn.lcd.clear_display()
-    GPIO.cleanup()
+# finally:
+#     btn.lcd.clear_display()
+#     GPIO.cleanup()

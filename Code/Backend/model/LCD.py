@@ -76,6 +76,9 @@ class LCD:
             self.send_instruction((0x80 | 0x40))
             self.write_message(ips[1].decode())
 
+    def stop_program(self):
+        self.write_message("Program stopped...")
+
     def setup_display(self):
         #LCD
         #function set

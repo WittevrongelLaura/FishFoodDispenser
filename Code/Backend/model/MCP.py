@@ -60,8 +60,8 @@ class MCP:
     def get_capacity(self):
         value_up = self.read_channel(0)
         value_under = self.read_channel(1)
-        print(value_up)
-        print(value_under)
+        # print(value_up)
+        # print(value_under)
         # print()
         # print(round(self.convert_to_percentage(value_up, value_under)))
         # print()
