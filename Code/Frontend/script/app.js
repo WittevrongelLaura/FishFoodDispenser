@@ -124,20 +124,93 @@ const listenToSocket = function(){
             //     console.log(bar)
             // }
 
+            const removeCSSClass = function(num, action, status){
+                let CSSclass = null
+                if (status == "empty"){
+                    CSSclass = "c-status-bar--empty"
+                }else if(status == "almost"){
+                    CSSclass = "c-status-bar--almost-empty"
+                }else if(status == "full"){
+                    CSSclass = "c-status-bar--full"
+                }
+
+                if (num == "all"){
+                    if (action == "remove"){
+                        for (let i =0 ; i <= 9; i++){
+                        htmlBars[i].classList.remove("c-status-bar--empty");
+                        htmlBars[i].classList.remove("c-status-bar--almost-empty");
+                        htmlBars[i].classList.remove("c-status-bar--full");
+                        }
+                    }else if (action == "add"){
+                        for (let i =0 ; i <= 9; i++){
+                            htmlBars[i].classList.add("c-status-bar--empty");
+                            htmlBars[i].classList.add("c-status-bar--almost-empty");
+                            htmlBars[i].classList.add("c-status-bar--full");
+                            }
+                    }
+                    
+                    
+                }else{
+                    if (action == "add"){
+                        htmlBars[num].classList.add(CSSclass);
+                    } else if (action == "remove"){
+                        htmlBars[num].classList.remove(CSSclass);
+                    } 
+                }
+
+            }
+
             if (value_capacity > 0 && value_capacity <= 10){
                 console.log("container empty");
                 htmlBars[9].classList.add('c-status-bar--empty');
+                htmlBars[9].classList.remove('c-status-bar--almost-empty');
+                htmlBars[9].classList.remove('c-status-bar--full');
+                htmlBars[8].classList.remove('c-status-bar--empty');
+                htmlBars[8].classList.remove('c-status-bar--almost-empty');
+                htmlBars[8].classList.remove('c-status-bar--full');
+                htmlBars[7].classList.remove('c-status-bar--almost-empty');
+                htmlBars[7].classList.remove('c-status-bar--full');
+                htmlBars[6].classList.remove('c-status-bar--almost-empty');
+                htmlBars[6].classList.remove('c-status-bar--full');
+                htmlBars[5].classList.remove('c-status-bar--almost-empty');
+                htmlBars[5].classList.remove('c-status-bar--full');
+                htmlBars[4].classList.remove('c-status-bar--full');
+                htmlBars[3].classList.remove('c-status-bar--full');
+                htmlBars[2].classList.remove('c-status-bar--full');
+                htmlBars[1].classList.remove('c-status-bar--full');
+                htmlBars[0].classList.remove('c-status-bar--full');
+                //removeCSSClass("all", null, null);
                 htmlInfoMessage.innerHTML = `The container is almost empty!`;
 
             } else if (value_capacity > 0 && value_capacity <= 20){
                 htmlBars[9].classList.add('c-status-bar--empty');
                 htmlBars[8].classList.add('c-status-bar--empty');
+                htmlBars[7].classList.remove('c-status-bar--almost-empty');
+                htmlBars[7].classList.remove('c-status-bar--full');
+                htmlBars[6].classList.remove('c-status-bar--almost-empty');
+                htmlBars[6].classList.remove('c-status-bar--full');
+                htmlBars[5].classList.remove('c-status-bar--almost-empty');
+                htmlBars[5].classList.remove('c-status-bar--full');
+                htmlBars[4].classList.remove('c-status-bar--full');
+                htmlBars[3].classList.remove('c-status-bar--full');
+                htmlBars[2].classList.remove('c-status-bar--full');
+                htmlBars[1].classList.remove('c-status-bar--full');
+                htmlBars[0].classList.remove('c-status-bar--full');
                 htmlInfoMessage.innerHTML = `The container is almost empty!`;
                 
             } else if (value_capacity > 0 && value_capacity <= 30){
                 htmlBars[9].classList.add('c-status-bar--almost-empty');
                 htmlBars[8].classList.add('c-status-bar--almost-empty');
                 htmlBars[7].classList.add('c-status-bar--almost-empty');
+                htmlBars[6].classList.remove('c-status-bar--almost-empty');
+                htmlBars[6].classList.remove('c-status-bar--full');
+                htmlBars[5].classList.remove('c-status-bar--almost-empty');
+                htmlBars[5].classList.remove('c-status-bar--full');
+                htmlBars[4].classList.remove('c-status-bar--full');
+                htmlBars[3].classList.remove('c-status-bar--full');
+                htmlBars[2].classList.remove('c-status-bar--full');
+                htmlBars[1].classList.remove('c-status-bar--full');
+                htmlBars[0].classList.remove('c-status-bar--full');
                 htmlInfoMessage.innerHTML = `The container is half empty`;
                 
             } else if (value_capacity > 0 && value_capacity <= 40){
@@ -145,6 +218,13 @@ const listenToSocket = function(){
                 htmlBars[8].classList.add('c-status-bar--almost-empty');
                 htmlBars[7].classList.add('c-status-bar--almost-empty');
                 htmlBars[6].classList.add('c-status-bar--almost-empty');
+                htmlBars[5].classList.remove('c-status-bar--almost-empty');
+                htmlBars[5].classList.remove('c-status-bar--full');
+                htmlBars[4].classList.remove('c-status-bar--full');
+                htmlBars[3].classList.remove('c-status-bar--full');
+                htmlBars[2].classList.remove('c-status-bar--full');
+                htmlBars[1].classList.remove('c-status-bar--full');
+                htmlBars[0].classList.remove('c-status-bar--full');
                 htmlInfoMessage.innerHTML = `The container is half empty`;
                 
             } else if (value_capacity > 0 && value_capacity <= 50){
@@ -153,6 +233,12 @@ const listenToSocket = function(){
                 htmlBars[7].classList.add('c-status-bar--almost-empty');
                 htmlBars[6].classList.add('c-status-bar--almost-empty');
                 htmlBars[5].classList.add('c-status-bar--almost-empty');
+                htmlBars[5].classList.remove('c-status-bar--full');
+                htmlBars[4].classList.remove('c-status-bar--full');
+                htmlBars[3].classList.remove('c-status-bar--full');
+                htmlBars[2].classList.remove('c-status-bar--full');
+                htmlBars[1].classList.remove('c-status-bar--full');
+                htmlBars[0].classList.remove('c-status-bar--full');
                 htmlInfoMessage.innerHTML = `The container is half empty`;
                 
             } else if (value_capacity > 50 && value_capacity <= 60){
@@ -162,6 +248,10 @@ const listenToSocket = function(){
                 htmlBars[6].classList.add('c-status-bar--full');
                 htmlBars[5].classList.add('c-status-bar--full');
                 htmlBars[4].classList.add('c-status-bar--full');
+                htmlBars[3].classList.remove('c-status-bar--full');
+                htmlBars[2].classList.remove('c-status-bar--full');
+                htmlBars[1].classList.remove('c-status-bar--full');
+                htmlBars[0].classList.remove('c-status-bar--full');
                 htmlInfoMessage.innerHTML = `The container is full`;
                 
             } else if (value_capacity > 50 && value_capacity <= 70){
@@ -172,6 +262,9 @@ const listenToSocket = function(){
                 htmlBars[5].classList.add('c-status-bar--full');
                 htmlBars[4].classList.add('c-status-bar--full');
                 htmlBars[3].classList.add('c-status-bar--full');
+                htmlBars[2].classList.remove('c-status-bar--full');
+                htmlBars[1].classList.remove('c-status-bar--full');
+                htmlBars[0].classList.remove('c-status-bar--full');
                 htmlInfoMessage.innerHTML = `The container is full`;
                 
             } else if (value_capacity > 50 && value_capacity <= 80){
@@ -183,9 +276,14 @@ const listenToSocket = function(){
                 htmlBars[4].classList.add('c-status-bar--full');
                 htmlBars[3].classList.add('c-status-bar--full');
                 htmlBars[2].classList.add('c-status-bar--full');
+                htmlBars[1].classList.remove('c-status-bar--full');
+                htmlBars[0].classList.remove('c-status-bar--full');
                 htmlInfoMessage.innerHTML = `The container is full`;
                 
             } else if (value_capacity > 50 && value_capacity <= 90){
+                // for (let i = 0; i<= 9; i++){
+                //     htmlBars[i].classList.add('c-status-bar--full');
+                // }
                 htmlBars[9].classList.add('c-status-bar--full');
                 htmlBars[8].classList.add('c-status-bar--full');
                 htmlBars[7].classList.add('c-status-bar--full');
@@ -195,6 +293,7 @@ const listenToSocket = function(){
                 htmlBars[3].classList.add('c-status-bar--full');
                 htmlBars[2].classList.add('c-status-bar--full');
                 htmlBars[1].classList.add('c-status-bar--full');
+                htmlBars[0].classList.remove('c-status-bar--full');
                 htmlInfoMessage.innerHTML = `The container is full`;
                 
             } else if (value_capacity > 50 && value_capacity <= 100){

@@ -1,7 +1,7 @@
 from RPi import GPIO
 import time
-from model.Shiftregister import Shiftregister
-#from Shiftregister import Shiftregister
+#from model.Shiftregister import Shiftregister
+from Shiftregister import Shiftregister
 from subprocess import check_output
 
 class LCD:
@@ -89,25 +89,25 @@ class LCD:
 
     
 
-try:
-    lcd = LCD()
+# try:
+#     lcd = LCD()
    
-    #lcd.send_character(ord("F"))
+#     #lcd.send_character(ord("F"))
     
-    # text = "HALLO Laura"
-    # for char in text:
-    #     send_character(ord(char))
-    #send_character(65)#letter A schrijven
+#     # text = "HALLO Laura"
+#     # for char in text:
+#     #     send_character(ord(char))
+#     #send_character(65)#letter A schrijven
     
-    #lcd.write_message('Hello')
+#     #lcd.write_message('Hello')
 
-    lcd.get_ipaddress()
-    time.sleep(1)
+#     lcd.get_ipaddress()
+#     time.sleep(1)
 
-    # message = input("What do you want to display? > ")
-    # lcd.write_message(message)
+#     # message = input("What do you want to display? > ")
+#     # lcd.write_message(message)
     
-except KeyboardInterrupt as e:
-    print(e)
-# finally:
-    #lcd.clear_display()
+# except KeyboardInterrupt as e:
+#     print(e)
+# # finally:
+#     #lcd.clear_display()

@@ -26,9 +26,9 @@ lcd = LCD()
 servo = Servo()
 speaker = Speaker()
 #print(datetime.now())
-last_value_capacity = None
-last_value_temp = None
-last_value_level = None
+previous_value_capacity = None
+previous_value_temp = None
+previous_value_level = None
 
 try:
     # Start app
@@ -71,41 +71,42 @@ try:
 
     @socketio.on('F2B_getCapacity')
     def get_value_capacity(jsonObject):
-        global last_value_capacity
+        global previous_value_capacity
         while True:
             value_capacity = mcp.get_capacity()
-            print(value_capacity)
-            if value_capacity != last_value_capacity:
+            print(value_capacity, "%")
+            if value_capacity != previous_value_capacity:
                 emit("B2F_value_capacity", {"capacity":value_capacity}, broadcast=True)
                 time.sleep(0.25)
-            last_value_capacity = value_capacity
+            previous_value_capacity = value_capacity
 
     @socketio.on('F2B_getWaterTemp')
     def get_value_watertemp(jsonObject):
-        global last_value_temp
+        global previous_value_temp
         while True:
             value_watertemp = watertemp.read_temp()
-            print(value_watertemp, "%")
-            if value_watertemp != last_value_temp:
+            print(value_watertemp, "°C")
+            if value_watertemp != previous_value_temp:
                 print('verschillend')
                 emit("B2F_value_watertemp", value_watertemp)
                 time.sleep(0.25)
             else:
                 print('hetzelfde')
                 time.sleep(0.25)
-            last_value_temp = value_watertemp
+            previous_value_temp = value_watertemp
 
     @socketio.on('F2B_getWaterlevel')
     def get_value_waterlevel(jsonObject):
-        global last_value_level
+        global previous_value_level
         
         while True:
             value_waterlevel = waterlevel.read_waterlevel()
-            print(value_waterlevel)
-            emit("B2F_value_waterlevel", {"level":value_waterlevel}, broadcast=True)
-            time.sleep(0.25)
+            print(value_waterlevel, "%")
+            if value_waterlevel != previous_value_level:
+                emit("B2F_value_waterlevel", {"level":value_waterlevel}, broadcast=True)
+                time.sleep(0.25)
         
-            last_value_level = value_waterlevel
+            previous_value_level = value_waterlevel
    
 
     @socketio.on('F2B_addToDb')
