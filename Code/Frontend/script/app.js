@@ -58,15 +58,15 @@ const listenToClickSave = function(){
         console.log(time);
         console.log(stateSpeaker);
 
-        if (previousGrams != grams){
-            socket.emit("F2B_grams", grams);
+        if (previousGrams != grams || previousTime != time || previousStateSpeaker != stateSpeaker){
+            socket.emit("F2B_settingsChanged", [grams, time, stateSpeaker]);
         }
-        if (previousTime != time){
-            socket.emit("F2B_time", time);
-        }
-        if (previousStateSpeaker != stateSpeaker){
-            socket.emit("F2B_stateSpeaker", stateSpeaker)
-        }
+        // if (previousTime != time){
+        //     socket.emit("F2B_time", time);
+        // }
+        // if (previousStateSpeaker != stateSpeaker){
+        //     socket.emit("F2B_stateSpeaker", stateSpeaker)
+        // }
     })
 }
 //#endregion
@@ -108,7 +108,9 @@ const listenToUI = function(){
     }
     
 
-
+    if (htmlSettings){
+        socket.emit("F2B_getSettingsFromDb");
+    }
     
     
     
@@ -369,8 +371,26 @@ const listenToSocket = function(){
             // }
 
             // htmlTable.innerHTML = html;
-            console.log("Frontend")
+            console.log("Frontend");
             console.log(jsonObject);
+        })
+    }
+
+    if (htmlSettings){
+        socket.on('B2F_settings', function(jsonObject){
+            console.log(jsonObject);
+            let numOfGrams = jsonObject[0];
+            let feedingTime = jsonObject[1];
+            let state_speaker = jsonObject[2];
+
+            htmlGrams.value = numOfGrams;
+            htmlTime.value = feedingTime;
+
+            if (state_speaker == 0){
+                htmlStateSpeaker.checked = false;
+            }else{
+                htmlStateSpeaker.checked = true;
+            }
         })
     }
     

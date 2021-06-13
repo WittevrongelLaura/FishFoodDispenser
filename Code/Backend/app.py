@@ -1,4 +1,5 @@
 from logging import captureWarnings
+from os import stat
 from RPi import GPIO
 import time
 from datetime import datetime
@@ -255,27 +256,53 @@ try:
         # print(listData)
         #emit("B2F_DataFromDb", dictData)
 
-    @socketio.on('F2B_grams')
+    @socketio.on('F2B_settingsChanged')
     def change_grams(jsonObject):
         global num_grams
-        print(jsonObject)
-        num_grams = jsonObject
-
-    @socketio.on('F2B_time')
-    def change_grams(jsonObject):
         global feeding_time
-        print(jsonObject)
-        feeding_time = jsonObject
-
-    @socketio.on('F2B_stateSpeaker')
-    def change_grams(jsonObject):
         global state_speaker
-        print(jsonObject)
-        if jsonObject:
+        num_grams = jsonObject[0]
+        feeding_time = jsonObject[1]
+        state_speaker = jsonObject[2]
+        print(num_grams)
+        print(feeding_time)
+        
+        if state_speaker:
             #true = speaker activated
-            state_speaker = "on"
+            state_speaker = 1
         else:
-            state_speaker = "off"
+            state_speaker = 0
+        print(state_speaker)
+        
+        DataRepository.update_settings(num_grams, feeding_time, state_speaker)
+
+        
+        
+    @socketio.on("F2B_getSettingsFromDb")
+    def settingsFromDb():
+        print('send data from settings table')
+        settings = DataRepository.read_settings()
+        print(settings)
+
+        print(str(settings["feedingTime"]))
+
+        emit("B2F_settings", [settings['numOfGrams'], str(settings['feedingTime']), settings['stateSpeaker']])
+
+    # @socketio.on('F2B_time')
+    # def change_time(jsonObject):
+        
+    #     print(jsonObject)
+    #     feeding_time = jsonObject
+
+    # @socketio.on('F2B_stateSpeaker')
+    # def change_state_speaker(jsonObject):
+        
+    #     print(jsonObject)
+    #     if jsonObject:
+    #         #true = speaker activated
+    #         state_speaker = "on"
+    #     else:
+    #         state_speaker = "off"
 
 
 
@@ -315,8 +342,8 @@ except KeyboardInterrupt as e:
     print(e)
 
 finally:
+    watertemp.close_file()
     mcp.closespi()
     waterlevel.close_waterlevel()
-    watertemp.close_file()
     lcd.stop_program()
     GPIO.cleanup()

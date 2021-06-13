@@ -69,6 +69,19 @@ class DataRepository:
         params = [measuring_id]
         return Database.execute_sql(sql, params)
 
+    #########  Settings  #########
+    @staticmethod
+    def read_settings():
+        sql = "SELECT numOfGrams, feedingTime, stateSpeaker FROM FishFooddispenserDB.Settings;"
+        return Database.get_one_row(sql)
+
+    @staticmethod
+    def update_settings(numOfGrams, feedingTime, stateSpeaker):
+        sql = "UPDATE FishFooddispenserDB.Settings SET numOfGrams = %s, feedingTime = %s, stateSpeaker = %s;"
+        params = [numOfGrams, feedingTime, stateSpeaker]
+        return Database.execute_sql(sql, params)
+
+
     #########  Component  #########
     @staticmethod
     def create_component(component_name, measuring_unit):
