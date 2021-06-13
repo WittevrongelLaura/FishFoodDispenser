@@ -280,13 +280,22 @@ try:
         
     @socketio.on("F2B_getSettingsFromDb")
     def settingsFromDb():
+        global num_grams
+        global feeding_time
+        global state_speaker
         print('send data from settings table')
         settings = DataRepository.read_settings()
         print(settings)
 
-        print(str(settings["feedingTime"]))
+        num_grams = settings['numOfGrams']
+        feeding_time = str(settings['feedingTime'])
+        state_speaker =  settings['stateSpeaker']
 
-        emit("B2F_settings", [settings['numOfGrams'], str(settings['feedingTime']), settings['stateSpeaker']])
+        print(num_grams)
+        print(feeding_time)
+        print(state_speaker)
+
+        emit("B2F_settings", [num_grams, feeding_time, state_speaker])
 
     # @socketio.on('F2B_time')
     # def change_time(jsonObject):
@@ -305,31 +314,30 @@ try:
     #         state_speaker = "off"
 
 
-
+    @socketio.on('F2B_sendValuesToStart')
     
 
     def start_process():
         #### het proces manueel starten (ook met de button op index.html) ###
 
-        # #speaker maakt geluid
-        # speaker.getSound()
+        #speaker maakt geluid
+        speaker.getSound()
 
-        # #lcd geeft message: "starting process"
-        # lcd.write_message("Process started")
+        #lcd geeft message: "starting process"
+        lcd.write_message("Process started")
 
-        # #aantal gram ingesteld ophalen
-        # #lcd.read_display()
-
-        # #servo start met ingestelde grammen
-        # servo.start_servo(5)
+        #servo start met ingestelde grammen
+        print(num_grams)
+        servo.start_servo(num_grams)
 
         #lcd terug naar standby modus (ip-adres tonen)
         #lcd.setStatus(1)
-        pass
+        
         
 
 
-    #if time_now == lcd.setted_time()
+    if time_now == feeding_time:
+        print("its time to eat!")
         #start_process()
         #add_to_db()
         

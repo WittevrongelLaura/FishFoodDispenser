@@ -13,6 +13,7 @@ let htmlTable, htmlTableDatetime, htmlTableCapacity, htmlTableLevelTemp;
 let htmlBtnSave, htmlGrams, htmlTime, htmlStateSpeaker;
 
 let value_watertemp, value_waterlevel, value_capacity;
+let numOfGrams, feedingTime, state_speaker;
 //#endregion
 
 //#region ***  Callback-Visualisation - show___ ***
@@ -108,10 +109,11 @@ const listenToUI = function(){
     }
     
 
-    if (htmlSettings){
-        socket.emit("F2B_getSettingsFromDb");
-    }
+    //bij opstart de settings in analysis.html opvragen
+    socket.emit("F2B_getSettingsFromDb");
     
+    //bij opstart de se
+    socket.emit("F2B_sendValuesToStart", [numOfGrams, feedingTime, state_speaker])
     
     
 }
@@ -379,17 +381,19 @@ const listenToSocket = function(){
     if (htmlSettings){
         socket.on('B2F_settings', function(jsonObject){
             console.log(jsonObject);
-            let numOfGrams = jsonObject[0];
-            let feedingTime = jsonObject[1];
-            let state_speaker = jsonObject[2];
+            numOfGrams = jsonObject[0];
+            feedingTime = jsonObject[1];
+            state_speaker = jsonObject[2];
 
             htmlGrams.value = numOfGrams;
             htmlTime.value = feedingTime;
 
             if (state_speaker == 0){
                 htmlStateSpeaker.checked = false;
+                state_speaker = "off"
             }else{
                 htmlStateSpeaker.checked = true;
+                state_speaker = "on"
             }
         })
     }
@@ -444,6 +448,7 @@ const init = function () {
     
     listenToSocket();
     listenToUI();
+   
 
     if(htmlHome){
         console.log("on home page")
