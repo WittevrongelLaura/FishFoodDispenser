@@ -11,55 +11,28 @@ class DataRepository:
         return gegevens
 
     #########  Historiek/Dispenser  #########
-    @staticmethod
-    def read_all_history():
-        sql = "SELECT measuring_id, component_id, datetime, status, value, action_id FROM FishFooddispenserDB.Dispenser ORDER BY datetime desc;"
-        return Database.get_rows(sql)
-
     # @staticmethod
-    # def read_all_history_by_value(value):
-    #     if value == "datetime":
-    #         sql = "SELECT datetime FROM FishFooddispenserDB.Dispenser WHERE component_id in(1, 2, 3);"
-        
-    #     if value == "capacity":
-    #         sql = "SELECT value FROM FishFooddispenserDB.Dispenser WHERE component_id = 3;"
-
-    #     if value == "watertemp":
-    #         sql = "SELECT value FROM FishFooddispenserDB.Dispenser WHERE component_id = 1;"
-
-    #     if value == "waterlevel":
-    #         sql = "SELECT value FROM FishFooddispenserDB.Dispenser WHERE component_id = 2;"
-        
+    # def read_all_history():
+    #     sql = "SELECT measuring_id, component_id, datetime, status, value, action_id FROM FishFooddispenserDB.Dispenser ORDER BY datetime desc;"
     #     return Database.get_rows(sql)
 
-
-    # @staticmethod
-    # def read_value_by_id(measuring_id):
-    #     sql = "SELECT measuring_id, component_id, datetime, status, value, action_id FROM FishFooddispenserDB.Dispenser WHERE measuring_id = %s;"
-    #     params = [measuring_id]
-    #     return Database.get_one_row(sql, params)
+    
 
     @staticmethod
     def read_dates():
         sql = "SELECT distinct datetime FROM FishFooddispenserDB.Dispenser ORDER BY datetime desc;"
         return Database.get_rows(sql)
 
-    
-
-    @staticmethod
-    def read_capacity():
-        sql = "SELECT value FROM FishFooddispenserDB.Dispenser WHERE component_id = 3 ORDER BY datetime desc limit 1;"
-        return Database.get_rows(sql)
 
     @staticmethod
     def read_all_values_by_id(component_id):
         sql = "SELECT datetime, value FROM FishFooddispenserDB.Dispenser WHERE component_id = %s ORDER BY datetime desc;"
         params = [component_id]
         return Database.get_rows(sql, params)
-    
+
     @staticmethod
-    def read_all_values():
-        sql = "select datetime, value, component_id from FishFooddispenserDB.Dispenser order by datetime desc;"
+    def read_latest_values():
+        sql = "select value, component_id from FishFooddispenserDB.Dispenser order by datetime desc, component_id desc limit 3;"
         return Database.get_rows(sql)
     
 
@@ -85,6 +58,11 @@ class DataRepository:
     @staticmethod
     def read_settings():
         sql = "SELECT numOfGrams, feedingTime, stateSpeaker FROM FishFooddispenserDB.Settings;"
+        return Database.get_one_row(sql)
+
+    @staticmethod
+    def read_state_speaker():
+        sql = "SELECT stateSpeaker FROM FishFooddispenserDB.Settings;"
         return Database.get_one_row(sql)
 
     @staticmethod

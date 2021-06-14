@@ -28,6 +28,7 @@ watertemp = Watertemp()
 lcd = LCD()
 servo = Servo()
 speaker = Speaker()
+button = None
 #btn = Button(mcp.get_capacity(), watertemp.read_temp(), waterlevel.read_waterlevel(), speaker.state_speaker())
 
 #print(datetime.now())
@@ -40,6 +41,10 @@ feeding_time = None
 state_speaker = None
 time_for_timer = None
 
+value_capacity = None
+value_watertemp = None
+value_waterlevel = None
+
 try:
     # Start app
     app = Flask(__name__)
@@ -47,37 +52,46 @@ try:
     socketio = SocketIO(app, cors_allowed_origins="*")
     CORS(app)  
     print("*** Program started ***")
-    # value_watertemp = watertemp.read_temp()
-    # print(value_watertemp)
     
-    #lcd.write_message("hello")
-    
-    #lcd.get_ipaddress()
     #current time
     time_now = datetime.now().strftime("%H:%M:%S")
     print("Current time", time_now)
 
 
-    def start_process():
-        #### het proces manueel starten (ook met de button op index.html) ###
-
-        #lcd geeft message: "starting process"
-        lcd.write_message("Process started")
-
-        #speaker maakt geluid
-        speaker.get_sound()
-
-        #servo start met ingestelde grammen
-        print(num_grams)
-        servo.start_feeding(num_grams)
-
-        #lcd terug naar standby modus (ip-adres tonen)
-        #lcd.setStatus(1)
-
-    
     
 
+    def get_values_for_lcd():
+        print("get values for lcd")
+        global lcd_temp
+        global lcd_level
+        global lcd_capacity
+        global btn
+
+        speaker = DataRepository.read_state_speaker()
+        print(speaker)
+        data = DataRepository.read_latest_values()
+        print(data)
+
+        print(data[0]['component_id'])
+
+        for element in data:
+            if element['component_id'] == 1:
+                lcd_temp = element['value']
+            if element['component_id'] == 2:
+                lcd_level = element['value']
+            if element['component_id'] == 3:
+                lcd_capacity = element['value']
+        
+        print("lcd temp: ", lcd_temp)
+        print("lcd level: ", lcd_level)
+        print("lcd capacity: ", lcd_capacity)
+
+        btn = Button(str(lcd_capacity), str(lcd_temp), str(lcd_level), speaker)
+
+    get_values_for_lcd()
     
+
+
     ############socketio#######################
     @socketio.on('connect')
     def connection():
@@ -90,25 +104,11 @@ try:
         print("start process")
         start_process()
 
-    
-
-    # @socketio.on('F2B_getValuesPhotodiodes')
-    # def get_values_photodiodes(jsonObject):
-    #     print("De backend kreeg dit het jsonObject binnen: ")
-    #     #print(jsonObject)
-    #     emit('B2F_getValuesPhotodiodes', [mcp.read_channel(0),  mcp.read_channel(1)])
-
-    # @socketio.on('F2B_createPhotodiodes')
-    # def create_photodiodes_in_db(jsonObject):
-    #     #print(jsonObject)
-    #     up = jsonObject[0]
-    #     under = jsonObject[1]
-    #     # DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  up)
-    #     # DataRepository.create_fotodiode(datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"),  under)
-
     @socketio.on('F2B_getCapacity')
-    def get_value_capacity(jsonObject):
+    def get_value_capacity():
         global previous_value_capacity
+        global value_capacity
+
         while True:
             value_capacity = mcp.get_capacity()
             #print(value_capacity, "%")
@@ -118,8 +118,10 @@ try:
             previous_value_capacity = value_capacity
 
     @socketio.on('F2B_getWaterTemp')
-    def get_value_watertemp(jsonObject):
+    def get_value_watertemp():
         global previous_value_temp
+        global value_watertemp
+
         while True:
             value_watertemp = watertemp.read_temp()
             #print(value_watertemp, "°C")
@@ -133,9 +135,10 @@ try:
             previous_value_temp = value_watertemp
 
     @socketio.on('F2B_getWaterlevel')
-    def get_value_waterlevel(jsonObject):
+    def get_value_waterlevel():
         global previous_value_level
-        
+        global value_waterlevel
+
         while True:
             value_waterlevel = waterlevel.read_waterlevel()
             #print(value_waterlevel, "%")
@@ -185,64 +188,18 @@ try:
 
         print("Toegevoegd aan db")
 
-    
-
-
     @socketio.on('F2B_getDataFromDb')
     def get_data_from_db(jsonObject):
         print(jsonObject)
         capacity_id = 3
         watertemp_id = 1
         waterlevel_id = 2
-        # capacity = DataRepository.read_value_by_id(capacity_id)
-        # watertemp = DataRepository.read_value_by_id(watertemp_id)
-        # waterlevel = DataRepository.read_value_by_id(waterlevel_id)
-        
-        # dict met alle rows in
-        # print(DataRepository.read_all_history())
-        # data = DataRepository.read_all_history()
-
-        listData = []
-        dictData = {}
+               
         list_datetime = []
         list_capacity = []
         list_watertemp = []
         list_waterlevel = []
-        listValues = []
-        # datetime = str(data[0]["datetime"])
-        # value = data[0]["value"]
-        # print(datetime)
-        # print(value)
-        # # for row in data:
-        # #     if row.value in datetime:
-        # #         print("ja")
-                
-        #     else:
-        #         print("nee")
-        #         dictData[datetime] = value
-
-        #     listData.append(dictData)
-
         
-        # dictData[datetime] = 
-        
-        # for row in data:
-        #     datetime = str(row["datetime"])
-        #     print(datetime)
-        #     if datetime not in listDatetime:
-        #         listDatetime.append(datetime)
-            
-
-
-            
-                
-        # print("listdatetime")
-        # print (listDatetime)
-        # print("dict")
-        # print(listData)
-
-        #emit("B2F_DataFromDb", {"capacity": capacity, "watertemp": watertemp, "waterlevel": waterlevel})
-        #emit("B2F_DataFromDb", jsonify(datadb=data))
         dates = DataRepository.read_dates()
         all_capacity = DataRepository.read_all_values_by_id(capacity_id)
         all_watertemp = DataRepository.read_all_values_by_id(watertemp_id)
@@ -273,41 +230,9 @@ try:
             list_waterlevel.append(value_waterlevel)
         
         print(list_waterlevel)
-
-        #print(all_capacity.values())
-        #all_capacity.update({'datetime': str(all_capacity.value())})
         
         emit("B2F_DataFromDb", [list_datetime, list_capacity, list_watertemp, list_waterlevel])
 
-        # for row in all_capacity:
-            
-        #     print(row)
-        #     print(row['datetime'])
-        #     print(row['value'])
-        #     listCapacity.append(row['value'])
-        #     # print(row2['value'])
-        #     # print(row3['value'])
-        #     #dictData[str(row['datetime'])] = [row['value'], row2['value'], row3['value']]
-        #     dictData[str(row['datetime'])] = listCapacity
-                    
-        # for row2 in all_watertemp:
-        #     print(row2)
-        #     if row2['value'] not in dictData.values():
-        #         print('dicttttttttttt')
-        #         print(dictData.values())
-        #         dictData[str(row2['datetime'])] = [row2['value']]
-        #         #dictData.values().append(row2['value'])
-
-        # for row3 in all_waterlevel:
-        #     print(row3)
-        #     if row3['value'] not in dictData.values():
-        #         dictData[str(row3['datetime'])] = [row3['value']]
-        #         #dictData.values().append(row2['value'])
-                
-        # print(dictData)
-        # listData.append(dictData)
-        # print(listData)
-        #emit("B2F_DataFromDb", dictData)
 
     @socketio.on('F2B_settingsChanged')
     def change_grams(jsonObject):
@@ -342,8 +267,6 @@ try:
         settings = DataRepository.read_settings()
         #print(settings)
 
-
-
         num_grams = settings['numOfGrams']
         feeding_time = str(settings['feedingTime'])
         state_speaker =  settings['stateSpeaker']
@@ -356,15 +279,26 @@ try:
         
         # print(num_grams)
         # print(feeding_time)
-        # print(state_speaker)
+        print("state sp from db", state_speaker)
+        
+       
 
-        emit("B2F_settings", [num_grams, feeding_time, state_speaker])
+        
+
+        emit("B2F_settingsFromDb", [num_grams, feeding_time, state_speaker])
+
 
     @socketio.on('F2B_sendTimeAgain')
     def get_time_again(jsonObject):
         global time_for_timer
         print("send time again: ",jsonObject)
         time_for_timer = jsonObject
+
+
+    # @socketio.on('F2B_values_for_lcd')
+    # def start_lcd(jsonObject):
+    #     print('values for lcd')
+    #     print(jsonObject)
 
 
     #@socketio.on('F2B_sendValuesToStart')
@@ -388,23 +322,29 @@ try:
         
     # thread = Thread(target=timer)
     # thread.start()
+
+    def start_process():
+        #### het proces manueel starten (ook met de button op index.html) ###
+
+        #lcd geeft message: "starting process"
+        lcd.write_message("Process started")
+
+        print(state_speaker)
         
+        #speaker maakt geluid
+        speaker.get_sound()
+
+        #servo start met ingestelde grammen
+        print(num_grams)
+        servo.start_feeding(num_grams)
+
+        #lcd terug naar standby modus (ip-adres tonen)
+        #lcd.setStatus(1)
+
+    #start_process()
 
     
     
-    # @app.route('/api/v1/dates', methods=['GET'])
-    # def all_dates():
-    #     if request.method == 'GET':
-    #         data = DataRepository.read_dates()
-    #         print(data)
-    #         return jsonify(data), 200
-
-    # @app.route('/api/v1/capacity', methods=['GET'])
-    # def all_capacity():
-    #     if request.method == 'GET':
-    #         data = DataRepository.read_capacity()
-    #         print(data)
-    #         return jsonify(data), 200
 
     if __name__ == "__main__":
         #app.run(debug=True)
@@ -416,6 +356,7 @@ except KeyboardInterrupt as e:
     print(e)
 
 finally:
+    lcd.clear_display()
     watertemp.close_file()
     mcp.closespi()
     waterlevel.close_waterlevel()

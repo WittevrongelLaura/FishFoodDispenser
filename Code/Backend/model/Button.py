@@ -7,6 +7,8 @@ from model.LCD import LCD
 # from MCP import MCP
 
 
+
+
 class Button:
     def __init__(self, capacity, watertemp, waterlevel, speaker, btn_up=17, btn_down=27, btn_back=25, btn_enter=24, lcd=LCD()):
         self.btn_up = btn_up
@@ -21,7 +23,16 @@ class Button:
         self.watertemp = watertemp
         self.waterlevel = waterlevel
         self.capacity = capacity
-        self.speaker = speaker
+
+        if speaker == 0:
+            self.speaker = "off"
+        else:
+            self.speaker = "on"
+
+        print(self.capacity)
+        print(self.watertemp)
+        print(self.waterlevel)
+        print(self.speaker)
 
         self.status = 1
         #ip-adress wordt getoond bij opstart
@@ -52,7 +63,7 @@ class Button:
         # print(self.status)
 
     def callback_arrow_up(self, pin):
-        print("button up pressed")
+        #print("button up pressed")
         self.check_status(self.capacity, self.watertemp, self.waterlevel, self.speaker)
         
         self.status -= 1
@@ -68,7 +79,7 @@ class Button:
         # self.value_watertemp = self.watertemp.read_temp()
     
     def callback_arrow_down(self, pin):
-        print("button down pressed")
+        #print("button down pressed")
         
         
         self.status += 1
@@ -77,7 +88,7 @@ class Button:
             self.status = 1
         self.check_status(self.capacity, self.watertemp, self.waterlevel, self.speaker)
         # self.lcd.write_message(str(self.status))
-        print(self.status)
+        #print(self.status)
         
 
     def callback_back(self, pin):
@@ -108,20 +119,26 @@ class Button:
                 print("Capacity")
                 self.lcd.clear_display()
                 self.lcd.write_message("Capacity")
-                self.lcd.write_message(capacity)
+                self.lcd.send_instruction((0x80 | 0x40))
+                print(capacity)
+                self.lcd.write_message(capacity + " %")
             
             elif self.status == 3:
                 print("Watertemp")
                 self.lcd.clear_display()
                 self.lcd.write_message("Watertemperature")
-                self.lcd.write_message(watertemp)
+                self.lcd.send_instruction((0x80 | 0x40))
+                print(watertemp)
+                self.lcd.write_message(watertemp + " " + chr(39) + "C")
 
 
             elif self.status == 4:
                 print("Waterlevel")
                 self.lcd.clear_display()
                 self.lcd.write_message("Waterlevel")
-                self.lcd.write_message(waterlevel)
+                self.lcd.send_instruction((0x80 | 0x40))
+                print(waterlevel)
+                self.lcd.write_message(waterlevel + " %")
 
                 # self.previous_state_lcd = self.status
                 # print("previous", self.previous_state_lcd)
@@ -130,6 +147,8 @@ class Button:
                 print("speaker")
                 self.lcd.clear_display()
                 self.lcd.write_message("State speaker")
+                self.lcd.send_instruction((0x80 | 0x40))
+                print(speaker)
                 self.lcd.write_message(speaker)
         print()
             
