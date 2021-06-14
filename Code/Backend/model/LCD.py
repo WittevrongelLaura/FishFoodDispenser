@@ -52,9 +52,6 @@ class LCD:
         for char in message[16:]:
             self.send_character(ord(char))
 
-    def read_display(self):
-        pass
-
     def set_status(self, status):
         pass
 

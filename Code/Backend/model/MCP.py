@@ -90,15 +90,15 @@ class MCP:
         
         if percentage >= 0 and percentage <= 5:
             self.led.all_leds_off()
-            print("emtpy")
+            #print("emtpy")
             self.led.led_on("red")
         elif percentage > 5 and percentage <= 20:
             self.led.all_leds_off()
-            print("almost empty")
+            #print("almost empty")
             self.led.led_on("yellow")
         elif percentage > 20 and percentage <= 100:
             self.led.all_leds_off()
-            print("full")
+            #print("full")
             self.led.led_on("green")
 
         

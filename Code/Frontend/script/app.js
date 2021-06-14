@@ -9,7 +9,7 @@ let htmlHome, htmlAnalysis, htmlSettings, htmlAbout, htmlUserManuals;
 let htmlFotodiodeBoven, htmlFotodiodeOnder, htmlBtnCreateValues, htmlToggleNav, htmlBtnFeedManually;
 let htmlCapacity, htmlTemp, htmlWaterlevel, htmlInfoMessage;
 let htmlBar, htmlBars;
-let htmlTable, htmlTableDatetime, htmlTableCapacity, htmlTableLevelTemp;
+let htmlTable, htmlTableDatetime, htmlTableCapacity, htmlTableLevelTemp, htmlRow;
 let htmlBtnSave, htmlGrams, htmlTime, htmlStateSpeaker;
 
 let value_watertemp, value_waterlevel, value_capacity;
@@ -17,11 +17,11 @@ let numOfGrams, feedingTime, state_speaker;
 //#endregion
 
 //#region ***  Callback-Visualisation - show___ ***
-const showValueFotodiode = function(jsonObject){
-    console.log("fotodiodes");
-    console.log(jsonObject);
-    htmlFotodiodeBoven.value = jsonObject;
-}
+// const showValueFotodiode = function(jsonObject){
+//     console.log("fotodiodes");
+//     console.log(jsonObject);
+//     htmlFotodiodeBoven.value = jsonObject;
+// }
 //#endregion
 
 //#region ***  Event Listeners - listenTo___ ***
@@ -62,6 +62,12 @@ const listenToClickSave = function(){
         if (previousGrams != grams || previousTime != time || previousStateSpeaker != stateSpeaker){
             socket.emit("F2B_settingsChanged", [grams, time, stateSpeaker]);
         }
+
+         //in de thread wordt de ingestelde tijd opgehaald
+        // 1/2 van de tijd is die value None
+        console.log('TIJD')
+        console.log("time : ",feedingTime)
+        socket.emit('F2B_sendTimeAgain', htmlTime.value);
         // if (previousTime != time){
         //     socket.emit("F2B_time", time);
         // }
@@ -77,14 +83,16 @@ const listenToUI = function(){
     console.log("listentoui")
     toggleNav();
 
-    window.onscroll = function(){
-        let sticky = htmlHeader.offsetTop;
-        if (window.pageYOffset > sticky){
-            htmlHeader.classList.add('.c-header--fixed');
-        } else {
-            htmlHeader.classList.remove('.c-header--fixed');
-        }
-    }
+    
+
+    // window.onscroll = function(){
+    //     let sticky = htmlHeader.offsetTop;
+    //     if (window.pageYOffset > sticky){
+    //         htmlHeader.classList.add('.c-header--fixed');
+    //     } else {
+    //         htmlHeader.classList.remove('.c-header--fixed');
+    //     }
+    // }
 
     //values opvragen van meegestuurde channels
     //socket.emit("F2B_getValuesPhotodiodes", {ch: [0, 1]});
@@ -107,13 +115,19 @@ const listenToUI = function(){
         //data in database opvragen
         socket.emit("F2B_getDataFromDb", "get data");
     }
+
+
     
 
     //bij opstart de settings in analysis.html opvragen
     socket.emit("F2B_getSettingsFromDb");
     
-    //bij opstart de se
-    socket.emit("F2B_sendValuesToStart", [numOfGrams, feedingTime, state_speaker])
+    //bij opstart de settings verzenden om het proces te starten
+    // console.log(numOfGrams)
+    // socket.emit("F2B_sendValuesToStart", [numOfGrams, feedingTime, state_speaker])
+
+   
+    
     
     
 }
@@ -130,27 +144,10 @@ const listenToSocket = function(){
         console.log('Verbonden met socket webserver'); 
     })
 
-    // socket.on('B2F_connection', function(jsonObject){
-    //     console.log(jsonObject)
-    // })
-
-    // socket.on('B2F_getValuesPhotodiodes', function(jsonObject){
-    //     console.log(jsonObject[0])
-    //     console.log(jsonObject[1])
-    //     let boven = jsonObject[0]
-    //     let onder = jsonObject[1]
-    //     htmlFotodiodeBoven.value = boven;
-    //     htmlFotodiodeOnder.value = onder;
-        
-    //     htmlBtnCreateValues.addEventListener('click', function(){
-    //         //values in database steken
-    //         socket.emit("F2B_createPhotodiodes", [htmlFotodiodeBoven.value, htmlFotodiodeOnder.value])
-    //     })
-        
-    // })
+    
     if (htmlHome){
         socket.on('B2F_value_capacity', function(jsonObject){
-            console.log(jsonObject.capacity)
+            console.log("live capacity: ", jsonObject.capacity)
             value_capacity = jsonObject.capacity
             let html = `${value_capacity}%`;
             htmlCapacity.innerHTML = html;
@@ -341,7 +338,7 @@ const listenToSocket = function(){
         })
 
         socket.on('B2F_value_watertemp', function(jsonObject){
-            console.log(jsonObject);
+            console.log("live watertemp: ", jsonObject);
             value_watertemp = jsonObject;
             console.log(value_watertemp);
             let html = `${jsonObject}°C`;
@@ -350,7 +347,7 @@ const listenToSocket = function(){
         
         socket.on('B2F_value_waterlevel', function(jsonObject){
             value_waterlevel = jsonObject.level
-            console.log(value_waterlevel)
+            console.log("live waterlevel: ", value_waterlevel)
             let html = `${value_waterlevel}%`;
             htmlWaterlevel.innerHTML = html;
         })
@@ -365,16 +362,74 @@ const listenToSocket = function(){
             // console.log(jsonObject.watertemp);
             // console.log(jsonObject.waterlevel);
             
-            // let html = '';
-            // for (let row of htmlTable){
-            //     html += `<td class="c-table__item js-table-datetime">25/05/21<br>19:00</td>
-            //     <td class="c-table__item js-table-capacity">${jsonObject.capacity}%</td>
-            //     <td class="c-table__item js-table-level-temp">${jsonObject.waterlevel}%<br>${jsonObject.watertemp}°C</td>`;
-            // }
-
-            // htmlTable.innerHTML = html;
+            
             console.log("Frontend");
             console.log(jsonObject);
+
+            let listDates = jsonObject[0]
+            let listCapacity = jsonObject[1]
+            let listWatertemp = jsonObject[2]
+            let listWaterlevel = jsonObject[3]
+            console.log(listDates)
+            console.log(listCapacity)
+            console.log(listWatertemp)
+            console.log(listWaterlevel)
+            
+            let listDate = []
+            let listTime = []
+
+            
+
+            let html = `<table class="c-table">
+            <tr class="c-table__header">
+                <th class="c-table__item">Date<br>time</th>
+                <th class="c-table__item">Status</th>
+                <th class="c-table__item">Waterlevel<br>Watertemp</th>
+            </tr>`;
+            
+            console.log(listDates.length)
+
+            for (let i = 0; i <= listDates.length -1; i++){
+                console.log(listDates[i])
+                console.log(listCapacity[i])
+                console.log(listWatertemp[i])
+                console.log(listWaterlevel[i])
+
+                listDate.push(listDates[i].substring(0,10))
+                listTime.push(listDates[i].substring(11, 19))
+                
+                html += `<tr class="c-table__header js-row"><td class="c-table__item js-table-datetime">${listDate[i]}<br>${listTime[i]}</td>
+                <td class="c-table__item js-table-capacity">${listCapacity[i]}%</td>
+                <td class="c-table__item js-table-level-temp">${listWaterlevel[i]}%<br>${listWatertemp[i]}°C</td></tr>`;
+            }
+
+            html += `</table>`;
+
+            htmlTable.innerHTML = html;
+
+            console.log(listDate)
+            console.log(listTime)
+            
+            // let htmldate = ``;
+            // for (let row of listDates){
+            //     htmldate += row
+            // }
+            // htmlTableDatetime.innerHTML = htmldate
+
+            // let htmlcapacity = ``;
+            // for (let row of listCapacity){
+            //     htmlcapacity += row
+            // }
+            // htmlTableCapacity.innerHTML = htmldate
+
+            // let htmlwatertemp = ``;
+            // for (let row of listWatertemp){
+            //     htmlwatertemp += row
+            // }
+            // htmlTableLevelTemp.innerHTML = htmldate
+
+            
+
         })
     }
 
@@ -396,10 +451,47 @@ const listenToSocket = function(){
                 state_speaker = "on"
             }
         })
+
+        
     }
     
 }
 //#endregion
+
+// const show_dates = function(jsonObject){
+    
+//     console.log(jsonObject)
+//     // for (const datetime of jsonObject){
+//     //     htmlTableDatetime.innerText = datetime
+//     // }
+//     htmlTableDatetime.innerhtml = jsonObject
+//     // let html = ``;
+//     let html = ``;
+    
+//     for (const date of jsonObject){
+//         html += `<td class="c-table__item js-table-datetime">${date.datetime.getDate() + '/' + date.datetime.getMonth() + '/' + date.datetime.getFullYear()}<br>19:00</td>`;
+        
+//     }
+
+//     htmlTableDatetime.innerHTML = html;
+    
+
+//     // for (const value of jsonObject){
+//     //     html += `<td class="c-table__item js-table-datetime">${value.datetime}<br>19:00</td>
+//     //     <td class="c-table__item js-table-capacity">${value.value}%</td>
+//     //     <td class="c-table__item js-table-level-temp">90.02%<br>15°C</td>`;
+//     // }
+
+//     // htmlTable.innerHTML = html
+
+
+// }
+
+// const get_values = function(){
+//     handleData('http://192.168.168.168:5000/api/v1/dates', show_dates);
+// }
+
+
 
 const toggleNav = function(){
     console.log("toggle nav")
@@ -440,7 +532,8 @@ const init = function () {
     htmlBar = document.querySelector('.js-status-bar');
     htmlBars = document.querySelectorAll('.js-bar');
 
-    htmlTable = document.querySelectorAll('.js-table');
+    htmlTable = document.querySelector('.js-table');
+    htmlRow = document.querySelectorAll('.js-row');
     htmlTableDatetime = document.querySelector('.js-table-datetime');
     htmlTableCapacity = document.querySelector('.js-table-capacity');
     htmlTableLevelTemp = document.querySelector('.js-tabel-level-temp');
@@ -455,14 +548,16 @@ const init = function () {
         listenToClickFeedManually();
     }
 
-    // if(htmlData){
-    //     console.log("on data page")
-    //     getDataFromDb()
-    // }
+    if(htmlAnalysis){
+        console.log("on data page")
+        //get_values()
+    }
 
     if (htmlSettings){
         console.log("on settings page")
+        
         listenToClickSave();
+        
     }
 
 };

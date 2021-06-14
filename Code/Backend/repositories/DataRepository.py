@@ -40,16 +40,28 @@ class DataRepository:
     #     return Database.get_one_row(sql, params)
 
     @staticmethod
-    def read_value_by_id(component_id):
-        sql = "SELECT value FROM FishFooddispenserDB.Dispenser WHERE component_id = %s ORDER BY datetime desc limit 1;"
-        params = [component_id]
-        return Database.get_one_row(sql, params)
+    def read_dates():
+        sql = "SELECT distinct datetime FROM FishFooddispenserDB.Dispenser ORDER BY datetime desc;"
+        return Database.get_rows(sql)
+
+    
+
+    @staticmethod
+    def read_capacity():
+        sql = "SELECT value FROM FishFooddispenserDB.Dispenser WHERE component_id = 3 ORDER BY datetime desc limit 1;"
+        return Database.get_rows(sql)
 
     @staticmethod
     def read_all_values_by_id(component_id):
         sql = "SELECT datetime, value FROM FishFooddispenserDB.Dispenser WHERE component_id = %s ORDER BY datetime desc;"
         params = [component_id]
         return Database.get_rows(sql, params)
+    
+    @staticmethod
+    def read_all_values():
+        sql = "select datetime, value, component_id from FishFooddispenserDB.Dispenser order by datetime desc;"
+        return Database.get_rows(sql)
+    
 
     @staticmethod
     def create_value(component_id, datetime, status, value, action_id):
