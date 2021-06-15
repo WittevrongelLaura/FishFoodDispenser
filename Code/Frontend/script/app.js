@@ -367,10 +367,10 @@ const listenToSocket = function(){
             let listDate = []
             let listTime = []
 
-            let html = `<table class="c-table">
+            let html = `<table class="c-table c-table--analysis">
             <tr class="c-table__header">
                 <th class="c-table__item">Date<br>time</th>
-                <th class="c-table__item">Status</th>
+                <th class="c-table__item">Capacity<br>container</th>
                 <th class="c-table__item">Waterlevel<br>Watertemp</th>
             </tr>`;
             

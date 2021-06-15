@@ -202,10 +202,10 @@ try:
         all_watertemp = DataRepository.read_all_values_by_id(watertemp_id)
         all_waterlevel = DataRepository.read_all_values_by_id(waterlevel_id)
         #print(dates)
-        print(all_capacity)
+        # print(all_capacity)
 
-        print(all_capacity[0]['datetime'])
-        print(all_capacity[0]['value'])
+        # print(all_capacity[0]['datetime'])
+        # print(all_capacity[0]['value'])
 
         for i in range(len(all_capacity)):
             value_datetime = all_capacity[i]['datetime']

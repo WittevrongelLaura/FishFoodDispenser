@@ -13,8 +13,8 @@
 */
 
 html {
-  min-height: 100vh;
-  height: fit-content;
+  /* min-height: 100vh;
+  height: fit-content; */
   font-size: 16px;
   line-height: 25px;
   /*font-family: "", Helvetica, arial, sans-serif;*/
@@ -30,8 +30,8 @@ html {
 }
 
 body{
-  min-height: inherit;
-  height: inherit;
+  /* min-height: inherit;
+  height: inherit; */
   display: flex;
   flex-direction: column;
 }
@@ -214,6 +214,11 @@ a:focus {
 .o-row--xl {
   padding-top: 72px;
   padding-bottom: 48px;
+}
+
+.o-row--lr {
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 @media (min-width: 768px) {
@@ -460,10 +465,10 @@ a:focus {
     ---
     Content component
 */
-.c-content{
+/* .c-content{
   flex: 1;
   margin-bottom: 70px;
-}
+} */
 
 /*
     Component: mobile nav
@@ -479,7 +484,7 @@ a:focus {
   top: 0;
   right: 0;
   left: 0;
-  height: 100vh;
+  /* height: 100vh; */
   /*state 1*/
   /*opacity: 0;*/
   /*animeren tussen de 2 states.*/
@@ -518,8 +523,8 @@ a:focus {
 }
 
 .c-page {
-  min-height: inherit;
-  height: inherit;
+  /* min-height: inherit;
+  height: inherit; */
   transition: transform 0.25s ease;
   transform: translateX(0);
 }
@@ -961,6 +966,20 @@ a:focus {
 }
 
 /*
+    Component: Table
+    ---
+    Table with data from database
+*/
+
+.c-form {
+  width: 100%;
+}
+
+.c-form input {
+  margin-top: 10px;
+}
+
+/*
     Component: CTA btn
     ---
     Small cta btn with custom animation
@@ -1006,7 +1025,8 @@ a:focus {
 }
 
 .c-btn-cta--save{
-  margin-top: 450px;
+  margin-top: 150px;
+  
 }
 
 /*
@@ -1019,44 +1039,72 @@ a:focus {
   width: 100%;
 }
 
-.c-table th {
+.c-table--analysis th {
   background-color: #0000ff;
   width: 33%;
 }
 
-.c-table th, .c-table td{
+.c-table--analysis th, .c-table td{
   padding-top: 5px;
   padding-bottom: 5px;
 }
 
-.c-table tr:nth-child(odd) {
+.c-table--analysis tr:nth-child(odd) {
   background-color: #c0c0c0;
   width: 33%;
 }
 
-.c-table tr:nth-child(even) {
+.c-table--analysis tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.c-table td {
+.c-table--analysis td {
   color: #000;
 }
 
-
-/*
-    Component: Table home
-    ---
-    Home table with data from database
-*/
-
-.c-table-home {
+.c-table--home {
   margin-top: 65px;
   text-align: left;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.c-table--home tr th{
+  width: 10px;
 }
 
 .c-table__capacity, .c-table__temp, .c-table__level{
   padding-left: 45px;
 }
+
+@media (min-width: 576px) {
+  .c-table--home {
+    margin-left: 120px;
+    margin-right: 120px;
+  }
+}
+
+@media (min-width: 768px){
+  .c-table--home {
+    margin-left: 215px;
+    margin-right: 215px;
+  }
+}
+
+@media (min-width: 992px){
+  .c-table--home {
+    margin-left: 325px;
+    margin-right: 325px;
+  }
+}
+
+@media (min-width: 1200px){
+  .c-table--home {
+    margin-left: 425px;
+    margin-right: 425px;
+  }
+}
+
 
 /*------------------------------------*\
   #UTILITIES
