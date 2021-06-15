@@ -111,7 +111,7 @@ const listenToUI = function(){
 
     if (htmlAnalysis){
         //data in database opvragen
-        socket.emit("F2B_getDataFromDb");
+        socket.emit("F2B_getDataFromDb", "get analysis data");
     }
 
     //bij opstart de settings in settings.html opvragen

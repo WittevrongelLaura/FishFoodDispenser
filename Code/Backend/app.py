@@ -85,7 +85,7 @@ try:
 
         btn = Button(str(lcd_capacity), str(lcd_temp), str(lcd_level), speaker)
 
-    get_values_for_lcd()
+    # get_values_for_lcd()
     
 
 
@@ -358,4 +358,5 @@ finally:
     mcp.closespi()
     waterlevel.close_waterlevel()
     lcd.stop_program()
+    led.all_leds_off
     GPIO.cleanup()

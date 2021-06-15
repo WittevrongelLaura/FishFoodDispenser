@@ -15,8 +15,11 @@ class MCP:
 
         self.led = led
 
-    def convert_to_percentage(self, value_up, value_under):
-        return (100/value_under) * value_up
+    # def convert_to_percentage(self, value_up, value_under):
+    #     return (100/value_under) * value_up
+
+    def convert_to_percentage(self, value):
+        return (value/1023.0)*100
 
     def closespi(self):
         self.spi.close()
@@ -44,50 +47,40 @@ class MCP:
 
         # meetwaarde afdrukken
         if ch == 0:
-            # print(result)
-            # print(format(self.OmzettenInPercentage(result), '.2f') + " %")
-            # return format(self.value_to_percentage(result), '.2f')
+          
             return result
         elif ch == 1:
-            # print(result)
-            # print(format(self.OmzettenInPercentage(result), '.2f') + " %")
-            # return format(self.value_to_percentage(result), '.2f')
+            
             return result
 
-    # def convert_to_percentage(self, value):
-    #     return(value/1023.0) * 100
+
 
     def get_capacity(self):
         value_up = self.read_channel(0)
         value_under = self.read_channel(1)
-        # print(value_up)
-        # print(value_under)
-        # print()
-        # print(round(self.convert_to_percentage(value_up, value_under)))
-        # print()
-        # print()
-        self.capacity_percentage =  round(self.convert_to_percentage(value_up, value_under))
+        
+        # self.capacity_percentage = round(self.convert_to_percentage(value_up, value_under))
+        # self.run_leds(self.capacity_percentage)
+        # return self.capacity_percentage
+
+        self.percentage_up = self.convert_to_percentage(value_up+100)
+        self.percentage_under = self.convert_to_percentage(value_under+100)
+
+        # print(self.percentage_up)
+        # print(self.percentage_under)
+        # print(self.capacity_percentage)
+
+        self.capacity_percentage = (self.percentage_up + self.percentage_under) / 2
+
         self.run_leds(self.capacity_percentage)
-        return self.capacity_percentage
-        # difference = value_up - value_under
-        # #positief maken
-        # difference = abs(difference)
-        # print(difference)
-        # if difference >= 0 and difference <=20:
-        #     print("Leeg")
-        #     self.led.led_on("red")
-        
-        # if difference > 20:
-        #     print("vol")
-        #     self.led.led_on("green")
 
+        return round(self.capacity_percentage)
+
+        
+
+       
     def run_leds(self, percentage):
-        # difference = value_up - value_under
-        # #positief maken
-        # difference = abs(difference)
-        # print(difference)
-
-        
+                
         if percentage >= 0 and percentage <= 5:
             self.led.all_leds_off()
             #print("emtpy")
@@ -107,11 +100,14 @@ class MCP:
 # mcp = MCP(led)
 
 # try:
-#     print(mcp.read_channel(0))
-#     # while True:
-#     #     print(mcp.get_capacity())
-#     #     time.sleep(1)
-#     #     print()
+    
+#     while True:
+#         # print(mcp.read_channel(0))
+#         # print(mcp.read_channel(1))
+#         print(mcp.get_capacity(), "%")
+#         time.sleep(1)
+#         print()
+
 # except KeyboardInterrupt as e:
 #     print(e)
 # finally:
