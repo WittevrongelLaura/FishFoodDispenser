@@ -57,9 +57,6 @@ try:
     time_now = datetime.now().strftime("%H:%M:%S")
     print("Current time", time_now)
 
-
-    
-
     def get_values_for_lcd():
         print("get values for lcd")
         global lcd_temp

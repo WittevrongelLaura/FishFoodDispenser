@@ -31,17 +31,17 @@ class LCD:
         GPIO.output(self.E, GPIO.HIGH)
         self.set_data_bits(value)
         GPIO.output(self.E, GPIO.LOW)
-        GPIO.output(self.E, GPIO.HIGH)#op high zetten om te beginnen lezen
-        time.sleep(0.01)
+        #GPIO.output(self.E, GPIO.HIGH)#op high zetten om te beginnen lezen
+        time.sleep(0.05)
 
     def send_character(self, character):
         #RS moet hoog staan voor character
         GPIO.output(self.RS, GPIO.HIGH)
+        GPIO.output(self.E, GPIO.HIGH) ###
         self.set_data_bits(character)
         GPIO.output(self.E, GPIO.LOW)
-        
-        GPIO.output(self.E, GPIO.HIGH)
-        time.sleep(0.01)
+        #GPIO.output(self.E, GPIO.HIGH)
+        time.sleep(0.05)
 
     def write_message(self, message):
         for char in message[0:16]:
@@ -57,6 +57,7 @@ class LCD:
 
     def clear_display(self):
         self.send_instruction(0x01)
+        time.sleep(0.01)
 
     def get_ipaddress(self):
         self.clear_display()

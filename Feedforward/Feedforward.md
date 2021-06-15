@@ -2,11 +2,11 @@
 
 **VOORNAAM NAAM:** Laura Wittevrongel
 
-**Sparringpartner:** schrijf hier de naam van jouw sparring partner. Deze persoon is jouw klankbord, redder in nood, motivator, partner in crime :-)
+**Sparringpartner:** Lotte Keyngnaert
 
-**Projectsamenvatting in max 10 woorden:** schrijf hier jouw samenvatting
+**Projectsamenvatting in max 10 woorden:** Automatische visvoederbak voor vissen in een vijver
 
-**Projecttitel:** plaats hier een catchy werktitel van jouw project
+**Projecttitel:** FishFood Dispenser
 
 # Tips voor feedbackgesprekken
 
