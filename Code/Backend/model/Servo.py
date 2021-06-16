@@ -34,7 +34,8 @@ class Servo:
         return 20/10*grams
 
     def start_feeding(self, grams):
-        time = self.calc_time_from_grams(grams)
+        #time = self.calc_time_from_grams(grams/100)
+        time = self.calc_time_from_grams(grams/100)
         self.pwm_servo.start(0)
         self.counter = 0
 

@@ -85,7 +85,10 @@ try:
 
         btn = Button(str(lcd_capacity), str(lcd_temp), str(lcd_level), speaker)
 
-    # get_values_for_lcd()
+        # changed_state = btn.prev_state_speaker()
+        # DataRepository.update_settings_speaker(changed_state)
+
+    get_values_for_lcd()
     
 
 
@@ -277,10 +280,6 @@ try:
         # print(num_grams)
         # print(feeding_time)
         print("state sp from db", state_speaker)
-        
-       
-
-        
 
         emit("B2F_settingsFromDb", [num_grams, feeding_time, state_speaker])
 
@@ -311,9 +310,8 @@ try:
             
             if time_now == feeding_time:
                 print("it\'s time to eat!")
-                print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-                #start_process()
-                #add_to_db()
+                start_process()
+                add_to_db()
             time.sleep(1)
     
         
@@ -328,15 +326,16 @@ try:
 
         print(state_speaker)
         
-        #speaker maakt geluid
-        speaker.get_sound()
+        # if state_speaker != False:
+        #     #speaker maakt geluid
+        #     speaker.get_sound()
 
         #servo start met ingestelde grammen
         print(num_grams)
         servo.start_feeding(num_grams)
 
         #lcd terug naar standby modus (ip-adres tonen)
-        #lcd.setStatus(1)
+        lcd.setStatus(1)
 
     #start_process()
 

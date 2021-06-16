@@ -71,6 +71,12 @@ class DataRepository:
         params = [numOfGrams, feedingTime, stateSpeaker]
         return Database.execute_sql(sql, params)
 
+    @staticmethod
+    def update_settings_speaker(stateSpeaker):
+        sql = "UPDATE FishFooddispenserDB.Settings SET stateSpeaker = %s;"
+        params = [stateSpeaker]
+        return Database.execute_sql(sql, params)
+
 
     #########  Component  #########
     @staticmethod

@@ -2,21 +2,18 @@ from RPi import GPIO
 import time
 from model.LCD import LCD
 #from LCD import LCD
-# from Watertemp  import Watertemp
-# from WaterLevel import Waterlevel
-# from MCP import MCP
-
-
-
 
 class Button:
-    def __init__(self, capacity, watertemp, waterlevel, speaker, btn_up=17, btn_down=27, btn_back=25, btn_enter=24, lcd=LCD()):
+
+    
+    def __init__(self, capacity, watertemp, waterlevel, speaker, btn_up=17, btn_down=27, btn_set=25, btn_enter=24, lcd=LCD()):
         self.btn_up = btn_up
         self.btn_down = btn_down
-        self.btn_back = btn_back
+        self.btn_set = btn_set
         self.btn_enter = btn_enter
         self.lcd = lcd
         
+        self.previous_state_speaker = None
 
         self.state_lcd = None
         self.previous_state_lcd = None
@@ -29,6 +26,8 @@ class Button:
         else:
             self.speaker = "on"
 
+        
+
         print(self.capacity)
         print(self.watertemp)
         print(self.waterlevel)
@@ -40,14 +39,16 @@ class Button:
         self.check_status(self.capacity, self.watertemp, self.waterlevel, self.speaker)
         self.previous_state_lcd = 1
 
+       
+
         # self.value_watertemp = None
         # self.value_waterlevel = None
 
         GPIO.setmode(GPIO.BCM)
 
-        self.arr_btns = [self.btn_up, self.btn_down, self.btn_back, self.btn_enter]
+        self.arr_btns = [self.btn_up, self.btn_down, self.btn_set, self.btn_enter]
         self.arrow_btns = [self.btn_up, self.btn_down]
-        self.control_btns = [self.btn_back, self.btn_enter]
+        self.control_btns = [self.btn_set, self.btn_enter]
 
         for btn in self.arr_btns:
             GPIO.setup(btn, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -56,7 +57,7 @@ class Button:
         
         GPIO.add_event_detect(self.btn_up, GPIO.FALLING, callback=self.callback_arrow_up, bouncetime=1500)
         GPIO.add_event_detect(self.btn_down, GPIO.FALLING, callback=self.callback_arrow_down, bouncetime=1500)
-        GPIO.add_event_detect(self.btn_back, GPIO.FALLING, callback=self.callback_back, bouncetime=1500)
+        GPIO.add_event_detect(self.btn_set, GPIO.FALLING, callback=self.callback_set, bouncetime=1500)
         GPIO.add_event_detect(self.btn_enter, GPIO.FALLING, callback=self.callback_enter, bouncetime=1500)
         
 
@@ -91,14 +92,42 @@ class Button:
         #print(self.status)
         
 
-    def callback_back(self, pin):
+    def callback_set(self, pin):
         print("button back pressed")
+        # if self.status == 5:
+        #     if GPIO.event_detected(self.btn_set):
+        #         print("button enter pressed")
+        #         # global self.previous_state_speaker
+        #         self.lcd.send_instruction((0x80 | 0x40))
+        #         if self.speaker == 'on':
+        #             self.speaker = 'off'
+        #             self.previous_state_speaker = 'on'
+        #             print("speaker state: ", self.speaker)
+        #             print("prev state: ", self.previous_state_speaker)
+        #         else:
+        #             self.speaker = 'on'
+        #             self.previous_state_speaker = 'off'
+        #             print("speaker state: ", self.speaker)
+        #             print("prev state: ", self.previous_state_speaker)
+
+        #         self.lcd.write_message(self.speaker)
     
     def callback_enter(self, pin):
         print("button enter pressed")
+        # self.set_status(1)
+
+    def set_status(self, status):
+        self.status = status
+        self.check_status(self.capacity, self.watertemp, self.waterlevel, self.speaker)
 
 
-     
+    # ********** property prev_state_speaker - (setter/getter) ***********
+    @property
+    def prev_state_speaker(self):
+        """ The prev_state_speaker property. """
+        return self.previous_state_speaker
+    
+    
 
     def check_status(self, capacity, watertemp, waterlevel, speaker):
         # , number_grams, feeding_time, state_speaker
@@ -145,12 +174,15 @@ class Button:
                 # print("previous", self.previous_state_lcd)
 
             elif self.status == 5:
+                
                 print("speaker")
                 self.lcd.clear_display()
                 self.lcd.write_message("State speaker")
                 self.lcd.send_instruction((0x80 | 0x40))
                 print(speaker)
                 self.lcd.write_message(speaker)
+                
+
         print()
             
 # try:
